@@ -1,0 +1,485 @@
+/* Root Feedback Component Styles */
+
+/* CSS Variables for Consistency */
+:root {
+  /* DBS Brand Colors */
+  --dbs-red: #EB0029;
+  --dbs-red-dark: #C8002A;
+  --dbs-red-light: #FF1744;
+  --dbs-black: #000000;
+  --dbs-white: #FFFFFF;
+  
+  /* Gray Scale */
+  --dbs-gray-50: #FAFAFA;
+  --dbs-gray-100: #F5F5F5;
+  --dbs-gray-200: #EEEEEE;
+  --dbs-gray-300: #E0E0E0;
+  --dbs-gray-400: #BDBDBD;
+  --dbs-gray-500: #9E9E9E;
+  --dbs-gray-600: #757575;
+  --dbs-gray-700: #424242;
+  --dbs-gray-800: #2A2A2A;
+  --dbs-gray-900: #1A1A1A;
+
+  /* Spacing System */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+
+  /* Typography */
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  color: var(--dbs-white);
+  background: var(--dbs-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Root Container */
+.root-feedback-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dbs-black) 0%, var(--dbs-gray-900) 50%, var(--dbs-gray-800) 100%);
+  position: relative;
+}
+
+/* Professional Navigation Bar */
+.professional-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--space-8);
+  height: 80px;
+  background: linear-gradient(135deg, var(--dbs-white) 0%, #f8f9fa 100%);
+  border-bottom: 3px solid var(--dbs-red);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+/* DBS Brand Section */
+.dbs-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.dbs-logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* DBS Logo Image */
+.dbs-logo-container-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.dbs-logo-image {
+  width: 150px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Logo hover effect */
+.dbs-logo-container-img:hover {
+  transform: translateY(-1px);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dbs-black);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  color: var(--dbs-gray-600);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+/* System Title */
+.system-title {
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--dbs-gray-200);
+}
+
+.title-main {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dbs-black);
+  line-height: 1.2;
+}
+
+.title-sub {
+  font-size: 0.875rem;
+  color: var(--dbs-gray-600);
+  font-weight: 500;
+}
+
+/* Navigation Controls */
+.navbar-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* Main Navigation */
+.main-navigation {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  color: var(--dbs-gray-700);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--dbs-red);
+  transition: width var(--transition-normal);
+}
+
+.nav-item:hover::before {
+  width: 80%;
+}
+
+.nav-item:hover {
+  color: var(--dbs-red);
+  background: rgba(235, 0, 41, 0.05);
+  transform: translateY(-1px);
+}
+
+.nav-icon {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.nav-label {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Professional Theme Toggle */
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--dbs-gray-200);
+}
+
+.theme-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dbs-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.toggle-track {
+  width: 50px;
+  height: 26px;
+  background: var(--dbs-gray-200);
+  border-radius: 26px;
+  position: relative;
+  transition: all var(--transition-normal);
+  border: 2px solid var(--dbs-gray-300);
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--dbs-white);
+  border-radius: 50%;
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-thumb.dark {
+  transform: translateX(22px);
+  background: var(--dbs-red);
+}
+
+.toggle-thumb.light .toggle-track {
+  background: #ffd700;
+  border-color: #ffed4e;
+}
+
+.toggle-thumb.dark .toggle-track {
+  background: var(--dbs-gray-700);
+  border-color: var(--dbs-red);
+}
+
+.toggle-icon {
+  font-size: 0.625rem;
+  line-height: 1;
+}
+
+.theme-toggle:hover .toggle-track {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Display Area */
+.form-display-area {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 120px);
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .professional-navbar {
+    height: auto;
+    padding: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .dbs-brand {
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .system-title {
+    border-left: none;
+    border-top: 2px solid var(--dbs-gray-200);
+    padding-left: 0;
+    padding-top: var(--space-3);
+  }
+
+  .navbar-controls {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .main-navigation {
+    gap: var(--space-1);
+  }
+
+  .nav-item {
+    font-size: 0.8rem;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+  }
+
+  .dbs-logo-container-img {
+    border-radius: 6px;
+  }
+
+  .dbs-logo-image {
+    width: 120px;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.root-feedback-container {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+.form-selector-header {
+  animation: slideInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+/* Legacy toggle styles (keeping for compatibility) */
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background: var(--dbs-gray-900);
+  color: var(--dbs-white);
+}
+
+.dark-mode .root-feedback-container {
+  background: linear-gradient(135deg, var(--dbs-gray-900) 0%, var(--dbs-black) 50%, var(--dbs-gray-800) 100%);
+}
+
+.dark-mode .form-selector-header {
+  background: rgba(0, 0, 0, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .nav-link {
+  color: var(--dbs-gray-200);
+}
+
+/* Dark Mode Styles for Professional Navbar */
+.dark-mode .professional-navbar {
+  background: linear-gradient(135deg, var(--dbs-gray-900) 0%, var(--dbs-black) 100%);
+  border-bottom: 3px solid var(--dbs-red);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .brand-name {
+  color: var(--dbs-white);
+}
+
+.dark-mode .brand-tagline {
+  color: var(--dbs-gray-400);
+}
+
+.dark-mode .title-main {
+  color: var(--dbs-white);
+}
+
+.dark-mode .title-sub {
+  color: var(--dbs-gray-400);
+}
+
+.dark-mode .system-title {
+  border-left-color: var(--dbs-gray-700);
+}
+
+.dark-mode .nav-item {
+  color: var(--dbs-gray-300);
+}
+
+.dark-mode .nav-item:hover {
+  background: rgba(235, 0, 41, 0.1);
+  color: var(--dbs-red);
+}
+
+.dark-mode .theme-controls {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--dbs-gray-700);
+}
+
+.dark-mode .theme-label {
+  color: var(--dbs-gray-400);
+}
+
+.dark-mode .toggle-track {
+  background: var(--dbs-gray-700);
+  border-color: var(--dbs-gray-600);
+}
+
+/* Dark mode compatibility for DBS logo image - no special styling needed */
+
+.dark-mode .nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--dbs-white);
+  border-color: rgba(255, 255, 255, 0.3);
+}
