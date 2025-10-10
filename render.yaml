@@ -1,5 +1,5 @@
 services:
-  - type: docker
+  - type: docker-compose
     name: dbs-feedback-system
     dockerComposeFilePath: DBS-Feedback-System/docker-compose.yml
     envFilePath: DBS-Feedback-System/.env
