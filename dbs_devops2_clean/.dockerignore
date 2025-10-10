@@ -1,0 +1,55 @@
+# Docker ignore file for DBS Feedback System
+.git
+.gitignore
+README.md
+DOCKER_DEPLOYMENT.md
+.env.example
+.env
+*.md
+
+# Node modules and build artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+build/
+dist/
+
+# Java build artifacts
+target/
+*.jar
+*.war
+*.ear
+*.class
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
