@@ -1,0 +1,7 @@
+services:
+  - type: docker
+    name: dbs-feedback-system
+    dockerComposeFilePath: docker-compose.yml
+    envFilePath: .env
+    region: oregon
+    branch: master
