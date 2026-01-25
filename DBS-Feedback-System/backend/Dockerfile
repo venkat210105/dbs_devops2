@@ -37,8 +37,5 @@ EXPOSE 8085
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:8085/api/health || exit 1
 
-# JVM options for containerized environment
-ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom"
-
 # Run the jar with optimized JVM settings
-CMD ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]
+CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
