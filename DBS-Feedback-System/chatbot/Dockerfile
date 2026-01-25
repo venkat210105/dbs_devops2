@@ -1,33 +1,22 @@
-# Stage 1: Build Node.js chatbot
-FROM node:18-alpine AS build
-
-# Set working directory
+FROM node:20-alpine
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Install deps separately for better caching
+COPY package.json package-lock.json* ./
+RUN npm ci || npm install --no-audit --no-fund
 
-# Install dependencies
-RUN npm ci --only=production --silent
-
-# Copy source code
+# Copy source
 COPY . .
 
-# Stage 2: Run chatbot
-FROM node:18-alpine
-
-# Set working directory
-WORKDIR /app
-
-# Copy built files and dependencies from build stage
-COPY --from=build /app .
+ENV NODE_ENV=production
+ENV PORT=4002
 
 # Expose chatbot port
-EXPOSE 4000
+EXPOSE 4002
 
-# Health check
+# Health check matches app.js health endpoint
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --spider -q http://localhost:4000/health || exit 1
+  CMD node -e "fetch('http://localhost:4002/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 # Start chatbot service
 CMD ["node", "app.js"]

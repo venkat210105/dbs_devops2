@@ -2,8 +2,11 @@
 package com.dbs.feedback.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import com.dbs.feedback.model.Feedback;
+import com.dbs.feedback.model.UserProfile;
 import com.dbs.feedback.repository.FeedbackRepository;
+import com.dbs.feedback.repository.UserProfileRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,21 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.dbs.feedback.model.Feedback;
-import com.dbs.feedback.repository.FeedbackRepository;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-
+import org.springframework.http.HttpMethod;
+import org.springframework.core.ParameterizedTypeReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,27 +26,48 @@ public class FeedbackService {
 
     private final FeedbackRepository repository;
     private final RestTemplate restTemplate;
-    private final String ML_URL = "http://localhost:5000/analyze";
+    private final String mlAnalyzeUrl;
+    private final UserProfileRepository userProfileRepository;
+    private final FeedbackAgentService feedbackAgentService;
 
-    public FeedbackService(FeedbackRepository repository) {
+    public FeedbackService(FeedbackRepository repository,
+                           UserProfileRepository userProfileRepository,
+                           FeedbackAgentService feedbackAgentService,
+                           @Value("${ML_SERVICE_URL:http://localhost:5000}") String mlServiceBaseUrl) {
         this.repository = repository;
+        this.userProfileRepository = userProfileRepository;
+        this.feedbackAgentService = feedbackAgentService;
         
         // Configure RestTemplate with timeouts
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(5000); // 5 seconds connection timeout
         factory.setReadTimeout(10000);   // 10 seconds read timeout
         this.restTemplate = new RestTemplate(factory);
+
+        // Ensure a sensible default when not running within a Spring context (e.g., plain Mockito tests)
+        String baseUrl = (mlServiceBaseUrl == null || mlServiceBaseUrl.isBlank())
+                ? "http://localhost:5000"
+                : mlServiceBaseUrl;
+
+        // Normalize analyze endpoint from base URL or full URL
+        if (baseUrl.endsWith("/analyze")) {
+            this.mlAnalyzeUrl = baseUrl;
+        } else {
+            this.mlAnalyzeUrl = baseUrl.replaceAll("/+$", "") + "/analyze";
+        }
     }
 
-    @Autowired
-    private FeedbackAgentService feedbackAgentService;
+    
 
     // Save feedback with sentiment analysis and agent service processing
     public Feedback saveFeedback(Feedback feedback) {
+        attachUserProfile(feedback);
         // Perform sentiment analysis first before saving
         performSentimentAnalysis(feedback);
         Feedback saved = repository.save(feedback);
-        feedbackAgentService.processFeedback(saved);
+        if (feedbackAgentService != null) {
+            feedbackAgentService.processFeedback(saved);
+        }
         return saved;
     }
 
@@ -97,7 +108,10 @@ public class FeedbackService {
             existing.setEmail(updated.getEmail());
         }
 
-        // Perform sentiment analysis before saving if comment or feedback is provided
+    // Keep user profile in sync
+    attachUserProfile(existing);
+
+    // Perform sentiment analysis before saving if comment or feedback is provided
         String textToAnalyze = updated.getComment() != null && !updated.getComment().isEmpty() ? 
                               updated.getComment() : updated.getFeedback();
         if (textToAnalyze != null && !textToAnalyze.isEmpty()) {
@@ -105,6 +119,42 @@ public class FeedbackService {
         }
 
         return repository.save(existing);
+    }
+
+    private void attachUserProfile(Feedback feedback) {
+        try {
+            String email = (feedback.getUserEmail() != null && !feedback.getUserEmail().isBlank()) ? feedback.getUserEmail().trim().toLowerCase() : null;
+            String userName = (feedback.getUserName() != null && !feedback.getUserName().isBlank()) ? feedback.getUserName().trim() : null;
+            String customerName = (feedback.getCustomerName() != null && !feedback.getCustomerName().isBlank()) ? feedback.getCustomerName().trim() : null;
+
+            if (email == null && (userName == null && customerName == null)) {
+                return; // nothing to attach
+            }
+
+            UserProfile profile = null;
+            if (email != null) {
+                profile = userProfileRepository.findByEmail(email).orElse(null);
+            }
+            if (profile == null) {
+                profile = new UserProfile();
+                profile.setEmail(email);
+                profile.setUserName(userName);
+                profile.setCustomerName(customerName);
+                profile = userProfileRepository.save(profile);
+            } else {
+                // update names if newly provided
+                boolean changed = false;
+                if (userName != null && (profile.getUserName() == null || !profile.getUserName().equals(userName))) {
+                    profile.setUserName(userName); changed = true;
+                }
+                if (customerName != null && (profile.getCustomerName() == null || !profile.getCustomerName().equals(customerName))) {
+                    profile.setCustomerName(customerName); changed = true;
+                }
+                if (changed) userProfileRepository.save(profile);
+            }
+            feedback.setUserProfile(profile);
+        } catch (Exception ignored) {
+        }
     }
 
     public boolean deleteFeedbackById(Long id) {
@@ -118,38 +168,58 @@ public class FeedbackService {
     // Synchronous method to call ML service and populate sentiment
     public void performSentimentAnalysis(Feedback feedback) {
         try {
-            if (feedback.getComment() == null || feedback.getComment().trim().isEmpty()) {
+            // Prefer concise comment, fall back to full feedback text
+            String text = (feedback.getComment() != null && !feedback.getComment().trim().isEmpty())
+                    ? feedback.getComment().trim()
+                    : (feedback.getFeedback() != null ? feedback.getFeedback().trim() : "");
+
+            if (text.isEmpty()) {
+                // No text to analyze: set sensible defaults including topic/service
                 feedback.setSentimentLabel("NEUTRAL");
                 feedback.setSentimentScore(0.5);
+                feedback.setTopic("general");
+                feedback.setServiceCategory("general");
                 return;
             }
 
-            System.out.println("Starting sentiment analysis for: " + feedback.getComment());
+            System.out.println("Starting sentiment analysis for: " + text);
 
             Map<String, String> request = new HashMap<>();
-            request.put("text", feedback.getComment());
+            request.put("text", text);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Map<String, String>> entity = new HttpEntity<>(request, headers);
 
             long startTime = System.currentTimeMillis();
-            ResponseEntity<Map> response = restTemplate.postForEntity(ML_URL, entity, Map.class);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+            mlAnalyzeUrl,
+            HttpMethod.POST,
+            entity,
+            new ParameterizedTypeReference<Map<String, Object>>() {}
+        );
             long endTime = System.currentTimeMillis();
 
             System.out.println("Sentiment analysis completed in " + (endTime - startTime) + "ms");
 
-            if (response.getBody() != null) {
-                String label = (String) response.getBody().get("label");
-                Double score = Double.valueOf(response.getBody().get("score").toString());
-                
+            Map<String, Object> body = response.getBody();
+            if (body != null) {
+                String label = (String) body.get("label");
+                Double score = Double.valueOf(body.get("score").toString());
+                String topic = body.get("topic") != null ? body.get("topic").toString() : "general";
+
+
                 feedback.setSentimentLabel(label != null ? label : "UNKNOWN");
                 feedback.setSentimentScore(score != null ? score : 0.0);
-                
-                System.out.println("Sentiment result: " + label + " (score: " + score + ")");
+                feedback.setTopic(topic);
+                feedback.setServiceCategory(topic); // Map topic to serviceCategory for now
+
+                System.out.println("Sentiment result: " + label + " (score: " + score + ") Topic: " + topic);
             } else {
                 feedback.setSentimentLabel("UNKNOWN");
                 feedback.setSentimentScore(0.0);
+                feedback.setTopic("general");
+                feedback.setServiceCategory("general");
                 System.out.println("No response body from sentiment analysis service");
             }
 
@@ -158,7 +228,10 @@ public class FeedbackService {
             e.printStackTrace();
             
             // Provide a simple rule-based fallback
-            String comment = feedback.getComment().toLowerCase();
+            String base = (feedback.getComment() != null && !feedback.getComment().isEmpty())
+                    ? feedback.getComment()
+                    : (feedback.getFeedback() != null ? feedback.getFeedback() : "");
+            String comment = base.toLowerCase();
             if (comment.contains("good") || comment.contains("great") || comment.contains("excellent") || 
                 comment.contains("amazing") || comment.contains("love") || comment.contains("perfect")) {
                 feedback.setSentimentLabel("POSITIVE");
@@ -170,6 +243,13 @@ public class FeedbackService {
             } else {
                 feedback.setSentimentLabel("NEUTRAL");
                 feedback.setSentimentScore(0.5);
+            }
+            // Ensure topic/serviceCategory are never left empty in fallback
+            if (feedback.getTopic() == null || feedback.getTopic().isEmpty()) {
+                feedback.setTopic("general");
+            }
+            if (feedback.getServiceCategory() == null || feedback.getServiceCategory().isEmpty()) {
+                feedback.setServiceCategory("general");
             }
             
             System.out.println("Using fallback sentiment: " + feedback.getSentimentLabel());
@@ -193,7 +273,12 @@ public class FeedbackService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<Map<String, String>> entity = new HttpEntity<>(testRequest, headers);
             
-            ResponseEntity<Map> response = restTemplate.postForEntity(ML_URL, entity, Map.class);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+            mlAnalyzeUrl,
+            HttpMethod.POST,
+            entity,
+            new ParameterizedTypeReference<Map<String, Object>>() {}
+        );
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             return false;
@@ -219,5 +304,47 @@ public class FeedbackService {
         // ML service is available, do synchronous analysis
         performSentimentAnalysis(feedback);
         return repository.save(feedback);
+    }
+
+    // Backfill topics for existing feedback records where topic is null/empty
+    public Map<String, Object> backfillMissingTopics() {
+        List<Feedback> all = repository.findAll();
+        int total = all.size();
+        int missing = 0;
+        int updated = 0;
+        int skipped = 0;
+        int errors = 0;
+
+        for (Feedback f : all) {
+            String t = f.getTopic();
+            boolean needs = (t == null || t.trim().isEmpty());
+            if (!needs) {
+                skipped++;
+                continue;
+            }
+            missing++;
+            try {
+                performSentimentAnalysis(f);
+                // Ensure defaults even if analysis had no text
+                if (f.getTopic() == null || f.getTopic().trim().isEmpty()) {
+                    f.setTopic("general");
+                }
+                if (f.getServiceCategory() == null || f.getServiceCategory().trim().isEmpty()) {
+                    f.setServiceCategory("general");
+                }
+                repository.save(f);
+                updated++;
+            } catch (Exception ex) {
+                errors++;
+            }
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("total", total);
+        result.put("missing", missing);
+        result.put("updated", updated);
+        result.put("skipped", skipped);
+        result.put("errors", errors);
+        return result;
     }
 }

@@ -129,30 +129,54 @@ class DBSBankingAssistant:
         full_conversation = ' '.join(user_messages)
         
         # Extract comprehensive info from full conversation
-        name = self.extract_name_advanced(full_conversation)
+        latest_msg = user_messages[-1] if user_messages else ''
+        # Prefer extracting name from the latest message (handles single-word replies like "john")
+        name = self.extract_name_advanced(latest_msg) or self.extract_name_advanced(full_conversation)
         email = self.extract_email(full_conversation)
         rating = self.extract_rating(full_conversation)
         service_cat = self.extract_service_category_advanced(full_conversation)
+        
+        # Derive feedback text: prefer the latest user message if substantial
+        feedback_text = None
+        if latest_msg and len(latest_msg.strip()) >= 20:
+            feedback_text = latest_msg.strip()
+        else:
+            # Find the longest substantial user message
+            candidates = [m.strip() for m in user_messages if len(m.strip()) >= 20]
+            if candidates:
+                # pick the last substantial message assuming it's the detailed feedback
+                feedback_text = candidates[-1]
+        
+        has_substantial_feedback = bool(feedback_text and len(feedback_text) >= 20)
         
         return {
             'name': name,
             'email': email,
             'rating': rating,
-            'feedback': full_conversation,
+            'feedback': feedback_text,
             'serviceCategory': service_cat,
-            'has_complete_info': bool(name and email and rating)
+            'has_complete_info': bool(name and email and rating and has_substantial_feedback)
         }
     
     def extract_name_advanced(self, text):
         """Extract customer name with better patterns"""
+        # Allow lowercase names and simple two-word names
         patterns = [
-            r"(?:i'm|i am|my name is|call me|name's)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)",
-            r"([A-Z][a-z]+\s+[A-Z][a-z]+)(?=\s|,|\.|$)"
+            # Phrases like: my name is john doe, call me john, I'm John Doe
+            r"(?:i'm|i am|my name is|call me|name's)\s+([A-Za-z][A-Za-z]*(?:\s+[A-Za-z][A-Za-z]*)*)",
+            # Fallback: at least two words that look like names
+            r"\b([A-Za-z]{2,}(?:\s+[A-Za-z]{2,})+)\b"
         ]
         for pattern in patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                return match.group(1).title()
+                candidate = match.group(1).strip()
+                # Normalize spacing and capitalization
+                return " ".join(part.capitalize() for part in candidate.split())
+        # If the input looks like a single first name (e.g., "john"), accept it
+        stripped = text.strip()
+        if 2 <= len(stripped) <= 40 and re.fullmatch(r"[A-Za-z]+(?:[-\s][A-Za-z]+)?", stripped):
+            return " ".join(part.capitalize() for part in stripped.split())
         return None
     
     def extract_service_category_advanced(self, text):
@@ -234,16 +258,7 @@ class DBSBankingAssistant:
         user_messages = [msg.get('content', '') for msg in messages if msg.get('role') == 'user']
         latest_message = user_messages[-1] if user_messages else ""
         
-        # Determine what information is missing
-        missing_info = []
-        if not conversation_info['name']:
-            missing_info.append('name')
-        if not conversation_info['email']:
-            missing_info.append('email')
-        if not conversation_info['rating']:
-            missing_info.append('rating')
-        
-        # Generate appropriate response based on missing information
+        # Determine what information is missing and ask step by step
         if not conversation_info['name']:
             return {
                 "choices": [{
@@ -271,6 +286,16 @@ class DBSBankingAssistant:
                     "message": {
                         "role": "assistant",
                         "content": f"Great! Now, on a scale of 1-5 stars, how would you rate your experience with {service}? (1 = Poor, 5 = Excellent)"
+                    }
+                }]
+            }
+
+        if not conversation_info['feedback']:
+            return {
+                "choices": [{
+                    "message": {
+                        "role": "assistant",
+                        "content": "Thanks! Could you share a few sentences describing your experience? Please include what went well or what we should improve."
                     }
                 }]
             }

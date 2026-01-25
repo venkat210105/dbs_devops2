@@ -41,6 +41,7 @@ public class GoogleAuthController {
         // Step 6: Generate authorization URL
         String authorizationUrl = flow.newAuthorizationUrl()
             .setRedirectUri(config.getRedirectUri())
+            .set("prompt", "consent")
             .build();
 
         return "Go to this URL to authorize: <a href='" + authorizationUrl + "'>Authorize</a>";

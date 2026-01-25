@@ -1,0 +1,13 @@
+# Python Hugging Face-like service Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY python-requirements.txt ./
+RUN --mount=type=cache,target=/root/.cache/pip pip install --no-cache-dir -r python-requirements.txt
+
+COPY services/huggingfaceService.py ./huggingfaceService.py
+
+EXPOSE 5001
+
+CMD ["python", "huggingfaceService.py"]

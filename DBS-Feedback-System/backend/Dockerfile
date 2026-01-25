@@ -6,11 +6,13 @@ WORKDIR /app
 
 # Copy pom.xml and download dependencies first (better caching)
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Use BuildKit cache for Maven repository
+RUN --mount=type=cache,target=/root/.m2 mvn -B -e -DskipTests dependency:go-offline
 
 # Copy source code and build
 COPY src ./src
-RUN mvn clean package -DskipTests -Dmaven.compile.fork=true
+# Leverage cache for Maven during build
+RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests -Dmaven.compile.fork=true clean package
 
 # Stage 2: Run the application
 FROM eclipse-temurin:21-jre-jammy

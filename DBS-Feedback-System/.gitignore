@@ -9,6 +9,14 @@ Thumbs.db
 .env
 .env.local
 .env.production
+*.env
+
+# Local MySQL/Database data
+data/
+docker-data/
+*.sock
+*.ibd
+*.dblwr
 
 # ===== NODE.JS / FRONTEND =====
 # Dependencies

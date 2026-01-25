@@ -8,6 +8,7 @@
   z-index: 1;
   isolation: isolate;
 }
+/* Minimal, neutral, black-on-white styling for Feedback List */
 
 .feedback-list-header {
   display: flex;
@@ -37,6 +38,17 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.feedback-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border: 1px solid #e5e7eb;
+}
 
 .feedback-count {
   background: linear-gradient(135deg, #EB0029 0%, #C8002A 100%);
@@ -63,6 +75,7 @@
   gap: 8px;
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
+.mr-1 { margin-right: 6px; }
 
 .refresh-btn:hover {
   transform: translateY(-2px);
@@ -83,6 +96,20 @@
   border-radius: 12px;
   margin: 20px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.refresh-btn {
+  background: #fff;
+  border: 1px solid #0b0f19;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0b0f19;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .loading-content {
@@ -282,10 +309,10 @@
 }
 
 .rating-stars {
-  color: #f59e0b;
-  font-size: 18px;
+  color: #0b0f19; /* black */
+  font-size: 16px;
   letter-spacing: 2px;
-  text-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+  text-shadow: none;
 }
 
 .rating-value {
@@ -300,13 +327,16 @@
   gap: 6px;
   padding: 8px 16px;
   border-radius: 20px;
-  color: white;
+  color: #0b0f19; /* black */
+  background: #f5f5f5; /* neutral */
+  border: 1px solid #e5e7eb;
   font-size: 12px;
   font-weight: 700;
   text-transform: capitalize;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
+.sentiment-badge .ui-icon { color: #0b0f19; }
 
 .feedback-card:hover .sentiment-badge {
   transform: scale(1.05);
@@ -541,3 +571,70 @@
 .feedback-card:nth-child(4) { animation-delay: 0.2s; }
 .feedback-card:nth-child(5) { animation-delay: 0.25s; }
 .feedback-card:nth-child(6) { animation-delay: 0.3s; }
+
+/* --- Minimal overrides to enforce neutral black/white aesthetic --- */
+.feedback-list-header h2 {
+  color: #0b0f19 !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: inherit !important;
+  background-clip: initial !important;
+}
+
+.feedback-count {
+  background: #f5f5f5 !important;
+  color: #0b0f19 !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+.refresh-btn {
+  background: #fff !important;
+  border: 1px solid #0b0f19 !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+  color: #0b0f19 !important;
+  box-shadow: none !important;
+}
+.refresh-btn:hover { background: #0b0f19 !important; color: #fff !important; transform: none !important; }
+
+.feedback-card { border: 1px solid #e5e7eb !important; box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important; }
+.feedback-card::before { content: none !important; }
+.feedback-card:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 12px rgba(0,0,0,0.08) !important; border-color: #d1d5db !important; }
+.feedback-card.expanded { border-color: #0b0f19 !important; box-shadow: 0 8px 20px rgba(0,0,0,0.12) !important; min-height: 300px !important; }
+
+.avatar { background: #f5f5f5 !important; color: #0b0f19 !important; border: 1px solid #e5e7eb !important; box-shadow: none !important; }
+
+.rating-display { background: #fafafa !important; border: 1px solid #e5e7eb !important; }
+.rating-stars { color: #0b0f19 !important; }
+
+.sentiment-badge {
+  color: #0b0f19 !important;
+  background: #f5f5f5 !important;
+  border: 1px solid #e5e7eb !important;
+  font-weight: 800 !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+.sentiment-badge .ui-icon { color: #0b0f19 !important; }
+
+.comment-text {
+  background: #fafafa !important;
+  border: 1px solid #e5e7eb !important;
+  border-left: none !important;
+  padding: 14px !important;
+  border-radius: 10px !important;
+}
+.feedback-card.expanded .comment-text { background: #fff !important; }
+
+.loading-spinner { border-top-color: #0b0f19 !important; }
+.empty-state { box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important; border: 1px dashed #e5e7eb !important; }
+.loading-icon { animation: none !important; }
+
+.toggle-expand { color: #0b0f19 !important; }
+.toggle-expand:hover { color: #111827 !important; }

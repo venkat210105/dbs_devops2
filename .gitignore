@@ -114,3 +114,15 @@ DBS-Feedback-System/ml-service/__pycache__/
 
 # Ignore database dumps
 *.sql
+
+node_modules
+build
+.git
+*.log
+.env
+
+.git
+*.log
+.env
+# Local Netlify folder
+.netlify

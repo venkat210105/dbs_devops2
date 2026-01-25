@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import './SentimentChart.css';
+import { Icon, IconChartBar } from './icons/OutlineIcons.jsx';
 
 export default function SentimentChart({ sentimentCounts }) {
   if (!sentimentCounts || typeof sentimentCounts !== 'object') {
@@ -10,7 +11,7 @@ export default function SentimentChart({ sentimentCounts }) {
           <h3>Sentiment Analysis</h3>
         </div>
         <div className="no-data-state">
-          <div className="no-data-icon">📊</div>
+          <div className="no-data-icon"><Icon><IconChartBar /></Icon></div>
           <p>No sentiment data available</p>
         </div>
       </div>
@@ -25,7 +26,7 @@ export default function SentimentChart({ sentimentCounts }) {
   const getSentimentColor = (label) => {
     switch (label.toLowerCase()) {
       case 'positive': return '#10b981';
-      case 'negative': return '#ef4444';
+  case 'negative': return '#ef4444';
       case 'neutral': return '#6b7280';
       default: return '#8884d8';
     }

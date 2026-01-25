@@ -1,0 +1,25 @@
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Publish directory (output of build)
+  publish = "build"
+
+[build.environment]
+  # Node version to use
+  NODE_VERSION = "18.0.0"
+
+# Redirect rules for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and CORS
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -11,6 +11,14 @@ const ChatbotComponent = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => {
+    // Create a stable session id per tab load
+    const existing = sessionStorage.getItem('dbsChatSessionId');
+    if (existing) return existing;
+    const id = `web-${Math.random().toString(36).slice(2, 10)}-${Date.now()}`;
+    sessionStorage.setItem('dbsChatSessionId', id);
+    return id;
+  });
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -21,6 +29,11 @@ const ChatbotComponent = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Allow runtime override via window.__CHATBOT_URL__ if present, then env, then sensible default
+  const chatbotBase = (typeof window !== 'undefined' && window.__CHATBOT_URL__) 
+    || process.env.REACT_APP_CHATBOT_URL 
+    || 'http://localhost:4000';
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -36,66 +49,20 @@ const ChatbotComponent = () => {
     setIsLoading(true);
 
     try {
-      // Call Hugging Face service directly
-      const response = await fetch('http://localhost:5001/chat', {
+      // Call Node chatbot API which proxies to HF or OpenAI
+      const response = await fetch(`${chatbotBase}/api/chat/message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: "system",
-              content: "You are a professional DBS Bank customer service assistant. Help customers submit feedback by collecting their name, email, rating (1-5), feedback details, and service category. When you have complete information, call the submit_feedback function."
-            },
-            ...messages.slice(-5), // Keep last 5 messages for context
-            userMessage
-          ],
-          functions: [{
-            name: "submit_feedback",
-            description: "Submit customer feedback to DBS Bank system",
-            parameters: {
-              type: "object",
-              properties: {
-                customerName: { type: "string", description: "Customer's full name" },
-                userEmail: { type: "string", description: "Customer's email address" },
-                rating: { type: "integer", description: "Rating from 1-5", minimum: 1, maximum: 5 },
-                feedback: { type: "string", description: "Detailed feedback text" },
-                serviceCategory: { 
-                  type: "string", 
-                  description: "Banking service category",
-                  enum: ["Account Services", "Loan Services", "Investment Services", "Digital Banking", "Customer Service", "Other"]
-                },
-                serviceChannel: { 
-                  type: "string", 
-                  description: "How customer accessed the service",
-                  enum: ["Branch", "Online Banking", "Mobile App", "Phone", "ATM", "Other"]
-                }
-              },
-              required: ["customerName", "userEmail", "rating", "feedback", "serviceCategory"]
-            }
-          }]
-        })
+        body: JSON.stringify({ sessionId, message: userMessage.content })
       });
 
       const data = await response.json();
-      
-      if (data.choices && data.choices[0]) {
-        const choice = data.choices[0];
-        
-        // Check if AI wants to call feedback function
-        if (choice.message.function_call && choice.message.function_call.name === 'submit_feedback') {
-          // Submit to backend
-          await submitFeedbackToBackend(JSON.parse(choice.message.function_call.arguments));
-        } else {
-          // Regular conversation response
-          const assistantMessage = {
-            role: 'assistant',
-            content: choice.message.content,
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, assistantMessage]);
-        }
+      const reply = data.reply || data.message || data.choices?.[0]?.message?.content;
+      if (reply) {
+        const assistantMessage = { role: 'assistant', content: reply, timestamp: new Date() };
+        setMessages(prev => [...prev, assistantMessage]);
       }
 
     } catch (error) {
@@ -142,9 +109,6 @@ const ChatbotComponent = () => {
           content: `✅ Thank you ${feedbackData.customerName}! Your feedback has been successfully submitted to DBS Bank. 
 
 📋 **Feedback Summary:**
-- **Rating:** ${feedbackData.rating}/5 stars
-- **Service:** ${feedbackData.serviceCategory}
-- **Feedback ID:** #${result.id}
 
 We appreciate your ${feedbackData.rating}-star rating and will review your feedback to improve our services. You can reference this feedback using ID #${result.id}.`,
           timestamp: new Date(),

@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class DashboardResponse {
     private Map<String, Long> sentimentCounts;
+    private Map<String, Long> urgencyCounts;
+    private Map<String, Long> taskStatusCounts;
     private List<TrendData> trends;
     private List<RecentFeedback> recentFeedback;
 
@@ -14,6 +16,22 @@ public class DashboardResponse {
 
     public void setSentimentCounts(Map<String, Long> sentimentCounts) {
         this.sentimentCounts = sentimentCounts;
+    }
+
+    public Map<String, Long> getUrgencyCounts() {
+        return urgencyCounts;
+    }
+
+    public void setUrgencyCounts(Map<String, Long> urgencyCounts) {
+        this.urgencyCounts = urgencyCounts;
+    }
+
+    public Map<String, Long> getTaskStatusCounts() {
+        return taskStatusCounts;
+    }
+
+    public void setTaskStatusCounts(Map<String, Long> taskStatusCounts) {
+        this.taskStatusCounts = taskStatusCounts;
     }
 
     public List<TrendData> getTrends() {

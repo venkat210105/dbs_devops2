@@ -1,0 +1,47 @@
+# Railway Ignore File
+# Exclude local development files and data
+
+# Local MySQL data
+data/
+docker-data/
+*.sock
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+**/target/
+**/build/
+**/dist/
+
+# Environment files
+.env.local
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+logs/
+
+# Test files
+**/test-classes/

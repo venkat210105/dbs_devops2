@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import java.sql.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "feedback")
@@ -43,6 +44,9 @@ public class Feedback {
     @Column(name = "service_category")
     private String serviceCategory;  // Account Services, Loan Services, etc.
 
+    @Column(name = "topic")
+    private String topic; // Extracted topic/service type for analytics
+
     @Column(name = "service_channel")
     private String serviceChannel;   // Branch, Online, Mobile App, etc.
 
@@ -65,6 +69,25 @@ public class Feedback {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    // Link to user profile (nullable for legacy/implicit system entries)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_profile_id")
+    @JsonIgnore
+    private UserProfile userProfile;
+
+    // Scheduling fields
+    @Column(name = "scheduled_at")
+    private Timestamp scheduledAt; // Final confirmed meeting start time
+
+    @Column(name = "meeting_duration_minutes")
+    private Integer meetingDurationMinutes; // Duration in minutes
+
+    @Column(name = "calendar_event_id")
+    private String calendarEventId; // Google Calendar event ID
+
+    @Column(name = "scheduling_status")
+    private String schedulingStatus; // PENDING, SCHEDULED, FAILED
 
     // Constructors
     public Feedback() {}
@@ -127,6 +150,9 @@ public class Feedback {
     public String getServiceCategory() { return serviceCategory; }
     public void setServiceCategory(String serviceCategory) { this.serviceCategory = serviceCategory; }
 
+    public String getTopic() { return topic; }
+    public void setTopic(String topic) { this.topic = topic; }
+
     public String getServiceChannel() { return serviceChannel; }
     public void setServiceChannel(String serviceChannel) { this.serviceChannel = serviceChannel; }
 
@@ -145,6 +171,21 @@ public class Feedback {
     public Timestamp getCreatedAt() { return createdAt; }
     public Timestamp getUpdatedAt() { return updatedAt; }
 
+    public UserProfile getUserProfile() { return userProfile; }
+    public void setUserProfile(UserProfile userProfile) { this.userProfile = userProfile; }
+
+    public Timestamp getScheduledAt() { return scheduledAt; }
+    public void setScheduledAt(Timestamp scheduledAt) { this.scheduledAt = scheduledAt; }
+
+    public Integer getMeetingDurationMinutes() { return meetingDurationMinutes; }
+    public void setMeetingDurationMinutes(Integer meetingDurationMinutes) { this.meetingDurationMinutes = meetingDurationMinutes; }
+
+    public String getCalendarEventId() { return calendarEventId; }
+    public void setCalendarEventId(String calendarEventId) { this.calendarEventId = calendarEventId; }
+
+    public String getSchedulingStatus() { return schedulingStatus; }
+    public void setSchedulingStatus(String schedulingStatus) { this.schedulingStatus = schedulingStatus; }
+
     @Override
     public String toString() {
         return "Feedback{" +
@@ -161,6 +202,10 @@ public class Feedback {
                 ", businessUnit='" + businessUnit + '\'' +
                 ", feedback='" + feedback + '\'' +
                 ", email='" + email + '\'' +
+                ", scheduledAt=" + scheduledAt +
+                ", meetingDurationMinutes=" + meetingDurationMinutes +
+                ", calendarEventId='" + calendarEventId + '\'' +
+                ", schedulingStatus='" + schedulingStatus + '\'' +
                 '}';
     }
 }

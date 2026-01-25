@@ -1,6 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import './TrendsChart.css';
+import { Icon, IconChartBar } from './icons/OutlineIcons.jsx';
 
 export default function TrendsChart({ trends }) {
   if (!trends || !Array.isArray(trends)) {
@@ -11,7 +12,7 @@ export default function TrendsChart({ trends }) {
           <div className="chart-subtitle">Track feedback volume and patterns</div>
         </div>
         <div className="no-data-state">
-          <div className="no-data-icon">📈</div>
+          <div className="no-data-icon"><Icon><IconChartBar /></Icon></div>
           <p>No trends data available</p>
           <span className="no-data-help">Feedback data will appear here over time</span>
         </div>

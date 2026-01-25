@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE } from '../utils/apiBase';
 import { useNavigate } from "react-router-dom";
 import "./FeedbackForm.css"; // We'll create this CSS file
 
@@ -29,7 +30,7 @@ const FeedbackForm = ({ onFeedbackAdded }) => {
     setIsSubmitting(true);
     
     try {
-      await axios.post("http://localhost:8085/feedback/submit", {
+      await axios.post(`${API_BASE}/feedback/submit`, {
         ...formData,
         productId: parseInt(formData.productId),
         rating: parseInt(formData.rating),

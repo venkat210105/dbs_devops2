@@ -3,6 +3,10 @@ import time
 
 app = Flask(__name__)
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "healthy", "service": "mock-ml"})
+
 @app.route('/analyze', methods=['POST'])
 def analyze_sentiment():
     data = request.get_json()

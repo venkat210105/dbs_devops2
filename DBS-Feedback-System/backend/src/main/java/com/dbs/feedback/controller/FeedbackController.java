@@ -38,6 +38,10 @@ public class FeedbackController {
             if (feedback.getProductId() == null) {
                 feedback.setProductId(1L);
             }
+            // Ensure non-null userEmail to satisfy DB constraint for implicit/system submissions
+            if (feedback.getUserEmail() == null || feedback.getUserEmail().isBlank()) {
+                feedback.setUserEmail("implicit@system.local");
+            }
             
             Feedback savedFeedback = feedbackService.saveFeedback(feedback);
             logger.info("Successfully saved feedback with ID: {}", savedFeedback.getId());

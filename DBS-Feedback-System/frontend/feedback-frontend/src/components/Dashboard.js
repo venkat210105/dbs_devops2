@@ -3,8 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { fetchDashboardData } from "../api";
 import SentimentChart from "./SentimentChart";
 import TrendsChart from "./TrendsChart";
+import UrgencyPieChart from "./UrgencyPieChart";
+import SentimentPieChart from "./SentimentPieChart";
+import ResolutionPieChart from "./ResolutionPieChart";
 import RecentFeedback from "./RecentFeedback";
 import './Dashboard.css';
+import TopNavBar from './TopNavBar';
+import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 
 export default function Dashboard() {
   const location = useLocation();
@@ -48,6 +53,7 @@ export default function Dashboard() {
 
   return (
     <div className={`dashboard-container light-mode`}>
+      <TopNavBar title="DBS Admin Dashboard" icon={<BarChartOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
       {oauthCode && (
         <div className="oauth-code-banner">
           <p>Received OAuth code: <b>{oauthCode}</b></p>
@@ -86,14 +92,10 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="charts-container">
-        <div className="chart">
-          <h3>Trends Over Time</h3>
-          <TrendsChart trends={data.trends} />
-        </div>
-        <div className="chart">
-          <h3>Sentiment Distribution</h3>
-          <SentimentChart sentimentCounts={data.sentimentCounts} />
-        </div>
+        <div className="chart"><TrendsChart trends={data.trends} /></div>
+        <div className="chart"><SentimentPieChart sentimentCounts={data.sentimentCounts} /></div>
+        <div className="chart"><UrgencyPieChart urgencyCounts={data.urgencyCounts} /></div>
+        <div className="chart"><ResolutionPieChart taskStatusCounts={data.taskStatusCounts} /></div>
       </div>
       <div className="recent-feedback">
         <h3>Recent Feedback</h3>

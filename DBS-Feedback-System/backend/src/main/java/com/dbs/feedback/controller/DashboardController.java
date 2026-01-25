@@ -10,12 +10,26 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
+        private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DashboardController.class);
+
     public DashboardController(DashboardService dashboardService) {
         this.dashboardService = dashboardService;
     }
 
-    @GetMapping("/api/dashboard")
-    public DashboardResponse getDashboard() {
-        return dashboardService.getDashboardData();
-    }
+        @GetMapping("/api/dashboard")
+        public org.springframework.http.ResponseEntity<?> getDashboard() {
+            logger.info("/api/dashboard endpoint called");
+            try {
+                logger.info("Calling dashboardService.getDashboardData()");
+                DashboardResponse response = dashboardService.getDashboardData();
+                logger.info("dashboardService.getDashboardData() returned successfully");
+                return org.springframework.http.ResponseEntity.ok(response);
+            } catch (Exception e) {
+                logger.error("Error loading dashboard data", e);
+                java.util.Map<String, String> errorResponse = new java.util.HashMap<>();
+                errorResponse.put("error", e.getMessage());
+                errorResponse.put("type", e.getClass().getSimpleName());
+                return org.springframework.http.ResponseEntity.status(500).body(errorResponse);
+            }
+        }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RecentFeedback.css';
+import { Icon, IconSmile, IconFrown, IconMeh, IconChat } from './icons/OutlineIcons.jsx';
 
 export default function RecentFeedback({ recentFeedback, darkMode }) {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function RecentFeedback({ recentFeedback, darkMode }) {
           <span className="feedback-count">No feedback available</span>
         </div>
         <div className="no-feedback">
-          <div className="no-feedback-icon">💬</div>
+          <div className="no-feedback-icon"><Icon><IconChat /></Icon></div>
           <p>No recent feedback to display</p>
         </div>
       </div>
@@ -35,7 +36,7 @@ export default function RecentFeedback({ recentFeedback, darkMode }) {
   const getSentimentColor = (sentiment) => {
     switch (sentiment?.toLowerCase()) {
       case 'positive': return '#10b981';
-      case 'negative': return '#ef4444';
+  case 'negative': return '#ef4444';
       case 'neutral': return '#6b7280';
       default: return '#6b7280';
     }
@@ -43,10 +44,10 @@ export default function RecentFeedback({ recentFeedback, darkMode }) {
 
   const getSentimentIcon = (sentiment) => {
     switch (sentiment?.toLowerCase()) {
-      case 'positive': return '😊';
-      case 'negative': return '😞';
-      case 'neutral': return '😐';
-      default: return '💬';
+      case 'positive': return <Icon><IconSmile /></Icon>;
+      case 'negative': return <Icon><IconFrown /></Icon>;
+      case 'neutral': return <Icon><IconMeh /></Icon>;
+      default: return <Icon><IconChat /></Icon>;
     }
   };
 

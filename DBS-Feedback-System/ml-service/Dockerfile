@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.11-slim
 
 # Create app user for security
@@ -11,10 +12,19 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+ARG ML_MODE=full
+
 # Copy and install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt ./
+COPY requirements-mock.txt ./
+# Use a single cache mount for pip to speed up repeated installs
+RUN --mount=type=cache,target=/root/.cache/pip \
+  pip install --no-cache-dir --upgrade pip && \
+  if [ "$ML_MODE" = "mock" ]; then \
+    pip install --no-cache-dir -r requirements-mock.txt; \
+  else \
+    pip install --no-cache-dir -r requirements.txt; \
+  fi
 
 # Copy source code
 COPY sentiment_service.py .
@@ -33,5 +43,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/health || exit 1
 
-# Run FastAPI app with uvicorn and production settings
-CMD ["uvicorn", "sentiment_service:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "2"]
+# Run service based on selected mode
+CMD ["sh", "-c", "if [ \"$ML_MODE\" = \"mock\" ]; then exec gunicorn -w 2 -b 0.0.0.0:5000 mock_sentiment_service:app; else exec uvicorn sentiment_service:app --host 0.0.0.0 --port 5000 --workers 2; fi"]

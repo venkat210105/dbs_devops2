@@ -1,0 +1,3 @@
+pageUrl,pageTitle,timeSpentSeconds,clickCount,scrollDepthPercent,timestamp,deviceType,browser,sessionId,userId,additionalNotes
+/loans/apply,Loan Application,120,3,90,2025-10-18T10:00:00Z,Desktop,Chrome 141,sess-1,john.doe@example.com,User took time on eligibility section
+/online-banking/transfer,Funds Transfer,360,6,80,2025-10-18T10:05:00Z,Mobile,Safari 17,sess-2,,Long dwell near confirm button

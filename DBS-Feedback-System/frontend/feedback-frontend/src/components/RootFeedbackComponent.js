@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EnhancedFeedbackForm from './EnhancedFeedbackForm';
 import './RootFeedbackComponent.css';
+// Removed TopNavBar from home to avoid duplicate nav
 
 const RootFeedbackComponent = () => {
   // Removed dark mode logic and theme toggle
@@ -9,6 +10,7 @@ const RootFeedbackComponent = () => {
   <div className="root-feedback-container">
       {/* Professional Navigation Header */}
       <div className="professional-navbar">
+        <div className="navbar-inner container">
         <div className="dbs-brand">
           <div className="dbs-logo-container">
             {/* DBS Logo */}
@@ -29,20 +31,21 @@ const RootFeedbackComponent = () => {
             <span className="title-sub">Feedback Portal</span>
           </div>
         </div>
-        
-        <div className="navbar-controls">
-          <nav className="main-navigation">
-            <a href="/dashboard" className="nav-item">
-              <span className="nav-icon">📊</span>
-              <span className="nav-label">Analytics</span>
-            </a>
+
+  <div className="navbar-controls">
+          <nav className="main-navigation corporate-nav">
             <a href="/feedback-list" className="nav-item">
-              <span className="nav-icon">📝</span>
               <span className="nav-label">Feedback</span>
             </a>
+            <a href="/admin" className="nav-item">
+              <span className="nav-label">Admin</span>
+            </a>
           </nav>
-          
-          {/* Theme toggle removed */}
+          <div className="user-profile">
+            <div className="user-avatar-initials" aria-hidden="true">CU</div>
+            <span className="user-name">User</span>
+          </div>
+        </div>
         </div>
       </div>
 

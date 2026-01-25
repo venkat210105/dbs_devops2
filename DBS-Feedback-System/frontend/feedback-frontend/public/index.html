@@ -27,6 +27,18 @@
     <title>React App</title>
   </head>
   <body>
+    <script>
+      // Optional runtime override (e.g., via nginx envsubst) to set chatbot URL without rebuild
+      // If __CHATBOT_URL__ placeholder gets replaced at deploy time, expose it globally
+      (function(){
+        try {
+          var injected = '__CHATBOT_URL__';
+          if (injected && injected.indexOf('http') === 0) {
+            window.__CHATBOT_URL__ = injected;
+          }
+        } catch(e) {}
+      })();
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

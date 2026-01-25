@@ -18,6 +18,25 @@
   color: var(--error);
   border: 1px solid var(--error);
 }
+/* Toast overlay that does not push layout */
+.feedback-toast {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 10px);
+  background: #ffffff;
+  border: 1px solid var(--border, #e5e7eb);
+  color: var(--text-primary, #111827);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0,0,0,.08));
+}
+.feedback-toast.success {
+  border-color: var(--success, #10b981);
+}
+.feedback-toast.error {
+  border-color: #ef4444;
+}
 
 /* Processing spinner styles */
 .processing-message {

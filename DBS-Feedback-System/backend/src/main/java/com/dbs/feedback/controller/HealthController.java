@@ -15,6 +15,11 @@ public class HealthController {
         return "OK";
     }
 
+        @GetMapping("/api/health")
+        public String apiHealth() {
+            return "OK";
+        }
+
     @GetMapping("/")
     public String home() {
         return "DBS Feedback System is running!";

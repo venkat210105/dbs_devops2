@@ -1,3 +1,7 @@
+# Keep docker context small for faster builds
 node_modules
 build
 .git
+*.log
+.env
+.DS_Store

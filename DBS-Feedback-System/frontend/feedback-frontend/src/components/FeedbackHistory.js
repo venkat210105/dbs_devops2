@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../utils/apiBase';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import './FeedbackHistory.css';
+import { Icon, IconSmile, IconFrown, IconMeh, IconInbox, IconXCircle } from './icons/OutlineIcons.jsx';
+import TopNavBar from './TopNavBar';
+import TableRowsOutlinedIcon from '@mui/icons-material/TableRowsOutlined';
 
 const FeedbackHistory = () => {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -28,8 +32,26 @@ const FeedbackHistory = () => {
   const fetchFeedbackHistory = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:8085/feedback/all');
-      setFeedbacks(response.data);
+  const response = await axios.get(`${API_BASE}/feedback/all`);
+      const mapped = (response.data || []).map(f => {
+        const sentiment = (f.sentiment || f.sentimentLabel || f.label || 'Unknown').toString();
+        const comment = f.comment || f.feedback || '';
+        const customerName = f.customerName || f.userName || 'N/A';
+        const email = f.email || f.userEmail || 'N/A';
+        const rating = typeof f.rating === 'number' ? f.rating : (parseInt(f.rating, 10) || 0);
+        let createdAt = f.createdAt;
+        try {
+          if (createdAt && typeof createdAt === 'object') {
+            if (typeof createdAt.time === 'number') {
+              createdAt = new Date(createdAt.time).toISOString();
+            } else if (typeof createdAt.seconds === 'number') {
+              createdAt = new Date(createdAt.seconds * 1000).toISOString();
+            }
+          }
+        } catch {}
+        return { ...f, sentiment, comment, customerName, email, rating, createdAt };
+      });
+      setFeedbacks(mapped);
     } catch (err) {
       console.error('Error fetching feedback history:', err);
       setError('Failed to fetch feedback history');
@@ -44,16 +66,17 @@ const FeedbackHistory = () => {
     // Filter by user if provided
     if (customerEmail || customerName) {
       filtered = filtered.filter(feedback => 
-        (customerEmail && (feedback.email === customerEmail || feedback.userEmail === customerEmail)) ||
-        (customerName && (feedback.customerName === customerName || feedback.userName === customerName))
+        (customerEmail && ((feedback.email || feedback.userEmail) === customerEmail)) ||
+        (customerName && ((feedback.customerName || feedback.userName) === customerName))
       );
     }
 
     // Filter by sentiment if provided
     if (sentimentFilter) {
-      filtered = filtered.filter(feedback => 
-        feedback.sentimentLabel?.toLowerCase() === sentimentFilter.toLowerCase()
-      );
+      filtered = filtered.filter(feedback => {
+        const s = (feedback.sentiment || feedback.sentimentLabel || feedback.label || '').toLowerCase();
+        return s === sentimentFilter.toLowerCase();
+      });
     }
 
     // Sort by most recent first
@@ -65,7 +88,7 @@ const FeedbackHistory = () => {
   const getSentimentColor = (sentiment) => {
     switch (sentiment?.toLowerCase()) {
       case 'positive': return '#10b981';
-      case 'negative': return '#ef4444';
+  case 'negative': return '#ef4444';
       case 'neutral': return '#6b7280';
       default: return '#6b7280';
     }
@@ -73,10 +96,10 @@ const FeedbackHistory = () => {
 
   const getSentimentIcon = (sentiment) => {
     switch (sentiment?.toLowerCase()) {
-      case 'positive': return '😊';
-      case 'negative': return '😞';
-      case 'neutral': return '😐';
-      default: return '💬';
+      case 'positive': return <Icon><IconSmile /></Icon>;
+      case 'negative': return <Icon><IconFrown /></Icon>;
+      case 'neutral': return <Icon><IconMeh /></Icon>;
+      default: return <Icon><IconMeh /></Icon>;
     }
   };
 
@@ -133,7 +156,7 @@ const FeedbackHistory = () => {
     return (
       <div className="feedback-history-container">
         <div className="error-state">
-          <div className="error-icon">❌</div>
+          <div className="error-icon"><Icon><IconXCircle /></Icon></div>
           <h3>Error Loading Feedback</h3>
           <p>{error}</p>
           <button onClick={fetchFeedbackHistory} className="retry-btn">
@@ -146,6 +169,7 @@ const FeedbackHistory = () => {
 
   return (
     <div className="feedback-history-container">
+      <TopNavBar title="Feedback History" icon={<TableRowsOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
       {/* Header */}
       <div className="history-header">
         <div className="header-content">
@@ -166,7 +190,7 @@ const FeedbackHistory = () => {
       {/* Feedback List */}
       {filteredFeedbacks.length === 0 ? (
         <div className="no-results">
-          <div className="no-results-icon">📭</div>
+          <div className="no-results-icon"><Icon><IconInbox /></Icon></div>
           <h3>No Feedback Found</h3>
           <p>No feedback entries match your current filters.</p>
           <button onClick={goBack} className="back-to-dashboard-btn">
@@ -183,10 +207,10 @@ const FeedbackHistory = () => {
                 <div className="sentiment-indicator">
                   <span 
                     className="sentiment-badge"
-                    style={{ backgroundColor: getSentimentColor(feedback.sentimentLabel) }}
+                    style={{ backgroundColor: getSentimentColor(feedback.sentiment || feedback.sentimentLabel) }}
                   >
-                    <span className="sentiment-icon">{getSentimentIcon(feedback.sentimentLabel)}</span>
-                    {feedback.sentimentLabel || 'Unknown'}
+                    <span className="sentiment-icon">{getSentimentIcon(feedback.sentiment || feedback.sentimentLabel)}</span>
+                    {feedback.sentiment || feedback.sentimentLabel || 'Unknown'}
                   </span>
                 </div>
               </div>

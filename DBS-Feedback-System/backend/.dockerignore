@@ -1,18 +1,14 @@
-# Ignore build output
+# Keep docker context small for faster builds
 target
 *.jar
-
-# Ignore IDE files
-*.iml
+*.log
+.env
+.git
 .idea/
 .vscode/
-
-# Ignore logs
-*.log
-
-# Ignore OS files
 .DS_Store
 Thumbs.db
-
-# Node modules if any (rare for backend)
 node_modules
+build
+__pycache__
+*.pyc

@@ -127,12 +127,15 @@
   gap: 6px;
   padding: 6px 12px;
   border-radius: 20px;
-  color: white;
+  color: #0b0f19; /* black */
+  background: #f5f5f5; /* neutral */
+  border: 1px solid #e5e7eb;
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
   margin-bottom: 8px;
 }
+.sentiment-badge .ui-icon { color: #0b0f19; }
 
 .sentiment-icon {
   font-size: 14px;
@@ -143,7 +146,7 @@
 }
 
 .rating-stars {
-  color: #fbbf24;
+  color: #0b0f19; /* black */
   font-size: 14px;
   letter-spacing: 1px;
 }

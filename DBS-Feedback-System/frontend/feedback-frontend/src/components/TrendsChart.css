@@ -179,11 +179,12 @@
 }
 
 .no-data-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.5;
-  animation: pulse 2s infinite;
+  font-size: 0; /* SVG sized via width/height */
+  margin-bottom: 10px;
+  opacity: 0.6;
+  color: var(--text-secondary, #6b7280);
 }
+
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 0.5; }
@@ -289,7 +290,6 @@
 @media (max-width: 360px) {
   .chart-stats {
     overflow-x: auto;
-    scrollbar-width: none;
     -ms-overflow-style: none;
   }
 

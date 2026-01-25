@@ -11,3 +11,58 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Design tokens */
+:root {
+  /* Palette */
+  --color-bg: #f6f8fa;
+  --color-surface: #ffffff;
+  --color-muted: #7b8a97;
+  --color-text: #3c4858;
+  --color-accent: #00b96b; /* Primary accent */
+  --color-accent-2: #eaf0f6; /* Soft surface */
+  --color-border: #e5e7eb;
+  --color-shadow: rgba(60,72,88,0.08);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(60,72,88,0.04);
+  --shadow-md: 0 2px 12px rgba(60,72,88,0.10);
+}
+
+/* Base layout helpers */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+.card-surface {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.headline {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.subtle {
+  color: var(--color-muted);
+}

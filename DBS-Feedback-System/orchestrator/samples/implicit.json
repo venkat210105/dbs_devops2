@@ -1,0 +1,30 @@
+{
+  "sessions": [
+    {
+      "userId": "john123",
+      "pageUrl": "/online-banking/transfer",
+      "pageTitle": "Funds Transfer",
+      "timeSpentSeconds": 420,
+      "clickCount": 5,
+      "scrollDepthPercent": 80.5,
+      "timestamp": "2025-10-17T14:30:25Z",
+      "deviceType": "Desktop",
+      "browser": "Chrome 115",
+      "sessionId": "sess-987654321",
+      "additionalNotes": "User seems stuck on confirmation button"
+    },
+    {
+      "userId": "emma456",
+      "pageUrl": "/loans/apply",
+      "pageTitle": "Loan Application",
+      "timeSpentSeconds": 900,
+      "clickCount": 2,
+      "scrollDepthPercent": 100,
+      "timestamp": "2025-10-17T15:05:10Z",
+      "deviceType": "Mobile",
+      "browser": "Safari 17",
+      "sessionId": "sess-987654322",
+      "additionalNotes": ""
+    }
+  ]
+}

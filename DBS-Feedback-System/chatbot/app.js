@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import chatRoutes from "./routes/chatRoutes.js";
+import axios from "axios";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -67,6 +68,7 @@ app.use((req, res) => {
 });
 
 const port = process.env.PORT || 4002; // Changed port to avoid conflicts
+const hfUrl = process.env.HUGGINGFACE_URL || 'http://localhost:5001';
 
 // Add process error handlers
 process.on('uncaughtException', (err) => {

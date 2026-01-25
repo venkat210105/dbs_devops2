@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./EnhancedFeedbackForm.css";
+import { API_BASE } from '../utils/apiBase';
 
 const EnhancedFeedbackForm = ({ onFeedbackAdded, isDarkMode }) => {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ const EnhancedFeedbackForm = ({ onFeedbackAdded, isDarkMode }) => {
         rating: parseInt(formData.rating) || 5
       };
 
-      await axios.post("http://localhost:8085/feedback/submit", submitData);
+      await axios.post(`${API_BASE}/feedback/submit`, submitData);
 
       setFormData({
         customerName: "",
@@ -67,8 +68,10 @@ const EnhancedFeedbackForm = ({ onFeedbackAdded, isDarkMode }) => {
         onFeedbackAdded();
       }
       setSuccessMessage("Thank you! Your feedback has been submitted successfully.");
+      setTimeout(() => setSuccessMessage(""), 3500);
     } catch (err) {
       setSuccessMessage("Failed to submit feedback. Please try again.");
+      setTimeout(() => setSuccessMessage(""), 3500);
     } finally {
       setIsSubmitting(false);
     }
@@ -80,9 +83,9 @@ const EnhancedFeedbackForm = ({ onFeedbackAdded, isDarkMode }) => {
 
   return (
     <div className={`enhanced-feedback-container ${isDarkMode ? 'dark-mode' : ''}`}>
-      {/* Show success or error message above the card */}
+      {/* Toast overlay - fixed, does not push layout */}
       {successMessage && (
-        <div className={`feedback-message ${successMessage.startsWith('Thank') ? 'success' : 'error'}`}>
+        <div className={`feedback-toast ${successMessage.startsWith('Thank') ? 'success' : 'error'}`} role="status" aria-live="polite">
           {successMessage}
         </div>
       )}
