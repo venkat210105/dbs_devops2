@@ -11,6 +11,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("SecurityConfig loaded!"); // Log to confirm config is active
         http
+            .cors(cors -> cors.configure(http)) // Enable CORS
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/feedback/submit", "/authorize", "/**").permitAll() // Allow all for testing
                 .anyRequest().permitAll()
