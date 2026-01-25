@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "DBS-Feedback-System/backend/Dockerfile"
+
+[deploy]
+startCommand = "java $JAVA_OPTS -jar app.jar"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
