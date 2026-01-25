@@ -1,6 +1,7 @@
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "DBS-Feedback-System/backend/Dockerfile"
+dockerContext = "DBS-Feedback-System/backend"
 
 [deploy]
 startCommand = "java $JAVA_OPTS -jar app.jar"
