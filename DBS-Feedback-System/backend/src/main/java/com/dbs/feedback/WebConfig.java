@@ -17,7 +17,8 @@ public class WebConfig {
                             "http://localhost:3000",     // React dev server default
                             "http://localhost:3001",     // React dev server alternative
                             "http://127.0.0.1:3000",    // Localhost alternative
-                            "http://127.0.0.1:3001"     // Localhost alternative
+                            "http://127.0.0.1:3001",     // Localhost alternative
+                            "https://dbs-feedback-frontend.netlify.app"  // Production frontend
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH")
                         .allowedHeaders("*")           // Allow all headers
