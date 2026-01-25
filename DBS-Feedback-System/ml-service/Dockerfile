@@ -17,9 +17,7 @@ ARG ML_MODE=full
 # Copy and install Python dependencies
 COPY requirements.txt ./
 COPY requirements-mock.txt ./
-# Use a single cache mount for pip to speed up repeated installs
-RUN --mount=type=cache,target=/root/.cache/pip \
-  pip install --no-cache-dir --upgrade pip && \
+RUN pip install --no-cache-dir --upgrade pip && \
   if [ "$ML_MODE" = "mock" ]; then \
     pip install --no-cache-dir -r requirements-mock.txt; \
   else \
