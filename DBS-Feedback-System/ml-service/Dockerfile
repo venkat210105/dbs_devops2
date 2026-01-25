@@ -1,45 +1,33 @@
-# syntax=docker/dockerfile:1.4
+# Use Python slim image for faster builds
 FROM python:3.11-slim
 
-# Create app user for security
-RUN groupadd -r appgroup && useradd -r -g appgroup -d /home/appuser -s /sbin/nologin -c "App user" appuser
-
 # Set working directory
-WORKDIR /home/appuser
+WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install only essential system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-ARG ML_MODE=full
+# Set build argument for ML mode
+ARG ML_MODE=mock
+ENV ML_MODE=${ML_MODE}
 
-# Copy and install Python dependencies
-COPY requirements.txt ./
-COPY requirements-mock.txt ./
-RUN pip install --no-cache-dir --upgrade pip && \
-  if [ "$ML_MODE" = "mock" ]; then \
-    pip install --no-cache-dir -r requirements-mock.txt; \
-  else \
-    pip install --no-cache-dir -r requirements.txt; \
-  fi
+# Copy requirements files
+COPY requirements-mock.txt requirements.txt ./
 
-# Copy source code
-COPY sentiment_service.py .
-COPY mock_sentiment_service.py .
+# Install Python dependencies (use mock by default for faster builds)
+RUN pip install --no-cache-dir -r requirements-mock.txt
 
-# Change ownership to app user
-RUN chown -R appuser:appgroup /home/appuser
+# Copy application code
+COPY mock_sentiment_service.py sentiment_service.py ./
 
-# Switch to non-root user
-USER appuser
-
-# Expose ML service port
+# Expose port
 EXPOSE 5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:5000/health || exit 1
 
-# Run service based on selected mode
-CMD ["sh", "-c", "if [ \"$ML_MODE\" = \"mock\" ]; then exec gunicorn -w 2 -b 0.0.0.0:5000 mock_sentiment_service:app; else exec uvicorn sentiment_service:app --host 0.0.0.0 --port 5000 --workers 2; fi"]
+# Run the mock service (lightweight)
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "mock_sentiment_service:app"]
