@@ -1,0 +1,373 @@
+.my-learning-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.my-learning-container h1 {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.architecture-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.architecture-section h2 {
+  color: #667eea;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.architecture-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.arch-layer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.arch-node {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  min-width: 180px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.arch-node:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.arch-node h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.arch-node p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.frontend-node { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+.backend-node { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+.db-node { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+.ml-node { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+.email-node { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
+.oauth-node { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+
+.data-flow {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.data-flow h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+.data-flow ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.data-flow li {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.data-flow strong {
+  color: #667eea;
+}
+
+.module-details {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.module-header h2 {
+  color: #667eea;
+  margin: 0;
+}
+
+.close-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #dc2626;
+  transform: rotate(90deg);
+}
+
+.module-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-section h3 {
+  color: #374151;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.tech-stack {
+  background: #f3f4f6;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.module-url {
+  margin-top: 0.5rem;
+}
+
+.module-url code {
+  background: #f3f4f6;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #10b981;
+}
+
+.challenges-list, .solutions-list {
+  list-style: none;
+  padding: 0;
+}
+
+.challenges-list li {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  border-radius: 4px;
+}
+
+.solutions-list li {
+  background: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  border-radius: 4px;
+}
+
+.evolution {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.evolution-path {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.evolution-path .initial, .evolution-path .final {
+  flex: 1;
+  min-width: 250px;
+}
+
+.evolution-path h4 {
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.evolution-path .arrow {
+  font-size: 2rem;
+  color: #667eea;
+  font-weight: bold;
+}
+
+.learnings-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.learnings-section h2 {
+  color: #667eea;
+  margin-bottom: 2rem;
+}
+
+.learning-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.learning-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.learning-card h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.learning-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.learning-card li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.learning-card li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+}
+
+.credentials-note {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #f59e0b;
+}
+
+.credentials-note h2 {
+  color: #f59e0b;
+  margin-bottom: 1rem;
+}
+
+.note-text {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.credentials-note ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.credentials-note li {
+  background: #fffbeb;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  border-left: 3px solid #f59e0b;
+}
+
+.credentials-note li strong {
+  color: #f59e0b;
+}
+
+@media (max-width: 768px) {
+  .my-learning-container {
+    padding: 1rem;
+  }
+
+  .my-learning-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .architecture-section, .module-details, .learnings-section, .credentials-note {
+    padding: 1.5rem;
+  }
+
+  .arch-node {
+    min-width: 150px;
+    padding: 1rem;
+  }
+
+  .evolution-path {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .evolution-path .arrow {
+    transform: rotate(90deg);
+  }
+
+  .learning-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-learning-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .arch-node {
+    min-width: 120px;
+    padding: 0.8rem;
+  }
+
+  .arch-node h3 {
+    font-size: 1rem;
+  }
+}

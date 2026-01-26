@@ -9,6 +9,7 @@ import './App.css';
 import AdminDashboard from './components/AdminDashboard';
 import AdminUsers from './components/AdminUsers';
 import AdminAgents from './components/AdminAgents';
+import MyLearning from './components/MyLearning';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { startTracking, endTracking } from './utils/pageTracker';
 import { useLocation } from 'react-router-dom';
@@ -71,6 +72,9 @@ function App() {
           <Route path="/admin/users" element={<AdminUsers />} />
           {/* Admin Agents Page */}
           <Route path="/admin/agents" element={<AdminAgents />} />
+          
+          {/* My Learning Page */}
+          <Route path="/my-learning" element={<MyLearning />} />
         </Routes>
 
         {/* Chatbot available on all pages */}
