@@ -133,13 +133,6 @@
         <artifactId>spring-security-oauth2-jose</artifactId>
     </dependency>
 
-    <!-- Resend for email via HTTPS API (works on Railway) -->
-    <dependency>
-        <groupId>com.resend</groupId>
-        <artifactId>resend-java</artifactId>
-        <version>3.0.0</version>
-    </dependency>
-
 
   </dependencies>
 
