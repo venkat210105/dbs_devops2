@@ -133,11 +133,11 @@
         <artifactId>spring-security-oauth2-jose</artifactId>
     </dependency>
 
-    <!-- Gmail API for sending emails via HTTPS (works on Railway) -->
+    <!-- Resend for email via HTTPS API (works on Railway) -->
     <dependency>
-        <groupId>com.google.apis</groupId>
-        <artifactId>google-api-services-gmail</artifactId>
-        <version>v1-rev20220404-2.0.0</version>
+        <groupId>com.resend</groupId>
+        <artifactId>resend-java</artifactId>
+        <version>3.0.0</version>
     </dependency>
 
 
