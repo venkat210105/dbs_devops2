@@ -297,27 +297,35 @@
   color: var(--color-muted, #7b8a97);
 }
 
-/* Interview Section */
-.interview-section {
-  background: linear-gradient(135deg, #eef2ff 0%, #fef3c7 100%);
+/* Technical Deep Dive Section */
+.technical-section {
+  background: linear-gradient(135deg, #f0f9ff 0%, #fef3c7 100%);
 }
 
-.interview-qa {
+.section-intro {
+  color: var(--color-muted, #7b8a97);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-5, 20px);
+  font-style: italic;
+}
+
+.technical-concept {
   margin-bottom: var(--space-5, 20px);
   padding: var(--space-5, 20px);
   background: white;
   border-radius: var(--radius-md, 12px);
   box-shadow: var(--shadow-sm, 0 1px 4px rgba(60,72,88,0.04));
+  border-left: 4px solid #0891b2;
 }
 
-.interview-question {
+.concept-title {
   font-size: 1.05rem;
   color: var(--color-text, #3c4858);
   margin-bottom: var(--space-3, 12px);
   font-weight: 600;
 }
 
-.interview-answer {
+.concept-explanation {
   color: var(--color-muted, #7b8a97);
   line-height: 1.7;
   padding-left: var(--space-4, 16px);

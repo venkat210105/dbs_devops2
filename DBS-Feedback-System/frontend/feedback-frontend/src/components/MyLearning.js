@@ -105,18 +105,22 @@ const fetchFeedbacks = async () => {
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'How does React\'s Virtual DOM improve performance?',
-          a: 'React creates a virtual representation of the DOM in memory. When state changes, React compares the new virtual DOM with the previous one (reconciliation), calculates the minimum number of changes needed, and batch-updates the real DOM efficiently.'
+          concept: 'Virtual DOM & Reconciliation',
+          explanation: 'React creates a virtual representation of the DOM in memory. When state changes, React compares the new virtual DOM with the previous one (reconciliation), calculates the minimum number of changes needed, and batch-updates the real DOM efficiently. This approach minimizes expensive DOM operations and improves performance significantly.'
         },
         {
-          q: 'Explain the difference between useEffect and useLayoutEffect',
-          a: 'useEffect runs asynchronously after paint, suitable for data fetching and side effects. useLayoutEffect runs synchronously after DOM mutations but before paint, used for DOM measurements and preventing visual flicker.'
+          concept: 'React Hooks - useEffect vs useLayoutEffect',
+          explanation: 'useEffect runs asynchronously after paint, making it suitable for data fetching, subscriptions, and side effects that don\'t block the visual update. useLayoutEffect runs synchronously after DOM mutations but before browser paint, used for DOM measurements and preventing visual flicker when modifying the DOM.'
         },
         {
-          q: 'How did you handle API error states?',
-          a: 'Implemented try-catch blocks with async/await, maintained error state, showed user-friendly messages, and logged errors for debugging. Used error boundaries for component-level error handling.'
+          concept: 'Error Handling Strategy',
+          explanation: 'Implemented comprehensive error handling with try-catch blocks using async/await for API calls. Maintained error state to show user-friendly messages. Integrated error boundaries at component level to catch and handle rendering errors gracefully, preventing full application crashes.'
+        },
+        {
+          concept: 'Component Composition Pattern',
+          explanation: 'Used functional components with hooks for better code reusability and testability. Implemented container/presentational component pattern where smart components handle logic and state, while dumb components focus on rendering UI based on props.'
         }
       ]
     },
@@ -261,22 +265,22 @@ spring.datasource.hikari.maximum-pool-size=5`
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'Explain the 3-tier architecture in Spring Boot',
-          a: 'Controller handles HTTP requests and responses, Service contains business logic, Repository (DAO) manages database operations. This separation ensures single responsibility, testability, and maintainability.'
+          concept: 'Layered Architecture Pattern (MVC)',
+          explanation: 'Implemented 3-tier architecture separating concerns: Controller layer handles HTTP requests/responses and validation, Service layer contains business logic and transaction management, Repository (DAO) layer manages database operations using JPA. This separation ensures single responsibility principle, improves testability through dependency injection, and enhances maintainability by isolating changes to specific layers.'
         },
         {
-          q: 'Why use @Transactional and where?',
-          a: '@Transactional ensures ACID properties. Used on service methods involving multiple database operations. Spring creates a proxy that begins transaction before method execution and commits/rollbacks after.'
+          concept: 'Transaction Management with @Transactional',
+          explanation: '@Transactional annotation ensures ACID properties (Atomicity, Consistency, Isolation, Durability) for database operations. Applied on service methods involving multiple database operations to ensure data integrity. Spring creates a proxy that begins transaction before method execution and commits on success or rolls back on exception, maintaining database consistency.'
         },
         {
-          q: 'How does Spring Boot\'s auto-configuration work?',
-          a: 'Spring Boot scans classpath for dependencies and automatically configures beans. For example, if spring-boot-starter-data-jpa is present, it auto-configures DataSource, EntityManager, and TransactionManager based on application.properties.'
+          concept: 'Spring Boot Auto-Configuration Mechanism',
+          explanation: 'Spring Boot scans the classpath for dependencies and automatically configures beans based on what it finds. For example, when spring-boot-starter-data-jpa is detected, it auto-configures DataSource, EntityManager, TransactionManager, and Hibernate properties based on application.properties. Uses @Conditional annotations to apply configuration only when specific conditions are met, reducing boilerplate configuration code.'
         },
         {
-          q: 'Why did you choose Resend over Gmail SMTP?',
-          a: 'Railway (and most PaaS platforms) block SMTP ports 587/465 to prevent spam. Resend uses HTTPS (port 443) which is always open. Provides 3,000 free emails/month permanently vs Gmail\'s strict rate limits.'
+          concept: 'Email Service Architecture Decision',
+          explanation: 'Chose Resend API over Gmail SMTP because Railway (like most PaaS platforms) blocks SMTP ports 587/465 to prevent spam and abuse. Resend operates over HTTPS (port 443) which is universally accessible. Provides 3,000 free emails/month permanently versus Gmail\'s strict rate limits and authentication complexity. Implemented as REST API integration using Spring RestTemplate for clean, maintainable code without SMTP dependencies.'
         }
       ]
     },
@@ -383,18 +387,18 @@ spring.datasource.password=\${MYSQLPASSWORD}
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'What is the N+1 query problem in Hibernate?',
-          a: 'Occurs with lazy-loaded relationships: 1 query to fetch N entities, then N additional queries to fetch related data. Solution: Use JOIN FETCH in JPQL or @EntityGraph to fetch everything in one query.'
+          concept: 'N+1 Query Problem in ORM',
+          explanation: 'Common performance issue with lazy-loaded relationships where fetching N entities results in 1 query + N additional queries to load related data. For example, fetching 100 feedbacks would execute 101 queries if user data is lazy-loaded. Solution: Use JOIN FETCH in JPQL or @EntityGraph annotation to fetch all required data in a single optimized query, drastically reducing database round trips.'
         },
         {
-          q: 'Explain database indexing strategy',
-          a: 'Created indexes on frequently queried columns (sentiment, created_at). Indexes speed up SELECT but slow down INSERT/UPDATE. Used composite indexes for multi-column WHERE clauses.'
+          concept: 'Database Indexing Strategy',
+          explanation: 'Created B-tree indexes on frequently queried columns (sentiment, created_at) to accelerate SELECT queries. Indexes create a sorted data structure allowing O(log n) lookups instead of O(n) table scans. Trade-off: indexes speed up reads but add overhead to writes (INSERT/UPDATE) as indexes must be maintained. Used composite indexes for multi-column WHERE clauses to optimize complex queries.'
         },
         {
-          q: 'How does HikariCP connection pooling work?',
-          a: 'Maintains a pool of reusable database connections. Threads borrow connections from pool, use them, and return. Avoids overhead of creating new connections. Configured max pool size based on expected concurrent users.'
+          concept: 'HikariCP Connection Pool Architecture',
+          explanation: 'HikariCP maintains a pool of pre-established, reusable database connections. Threads borrow connections from the pool, execute queries, and return connections instead of creating new ones. This eliminates connection establishment overhead (TCP handshake, authentication). Configured pool size based on formula: connections = ((core_count * 2) + effective_spindle_count), typically 5-10 for web applications. Implements connection leak detection to identify unreturned connections.'
         }
       ]
     },
@@ -503,14 +507,18 @@ CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]`
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'Why use microservices architecture for ML?',
-          a: 'Decouples ML logic from main application, allows independent scaling, can use Python for ML while main app uses Java, easier to update ML models without redeploying entire app.'
+          concept: 'Microservices Architecture Benefits',
+          explanation: 'Decouples ML logic from main application enabling independent deployment and scaling. Allows using Python for ML service while main application uses Java, leveraging each language\'s strengths. ML models can be updated, retrained, and deployed independently without touching the main application. Enables horizontal scaling of ML service based on prediction load while backend scales based on API traffic.'
         },
         {
-          q: 'How does Railway internal networking work?',
-          a: 'Railway creates a private network for all services in a project. Services can communicate using {service-name}.railway.internal DNS, which resolves to private IP addresses, bypassing public internet.'
+          concept: 'Railway Private Networking',
+          explanation: 'Railway creates a private virtual network for all services within a project. Services communicate using internal DNS ({service-name}.railway.internal) which resolves to private IP addresses. Traffic stays within Railway\'s infrastructure, bypassing public internet for lower latency, improved security, and no bandwidth charges. Implements service discovery pattern without external service mesh.'
+        },
+        {
+          concept: 'Docker Layer Caching Optimization',
+          explanation: 'Docker builds images in layers, caching unchanged layers to speed up subsequent builds. By copying requirements.txt before application code and running pip install separately, dependency layers are cached. When only code changes, Docker reuses cached dependency layers, dramatically reducing build time. Used multi-stage builds to separate build-time and runtime dependencies.'
         }
       ]
     },
@@ -651,18 +659,18 @@ resend.from.email=\${RESEND_FROM_EMAIL}`
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'Why do PaaS platforms block SMTP ports?',
-          a: 'To prevent spam and abuse. Open SMTP ports allow attackers to send mass emails. PaaS providers block ports 25, 587, 465 to protect their IP reputation and comply with anti-spam regulations.'
+          concept: 'PaaS SMTP Port Blocking',
+          explanation: 'Platform-as-a-Service providers block SMTP ports (25, 587, 465) to prevent spam and abuse. Open SMTP ports allow malicious users to send mass emails, damaging the platform\'s IP reputation and violating anti-spam regulations (CAN-SPAM Act, GDPR). Blocking these ports forces developers to use authenticated email APIs with better tracking and accountability.'
         },
         {
-          q: 'Resend vs SendGrid vs Gmail SMTP - why Resend?',
-          a: 'Resend: 3,000/month FREE forever. SendGrid: 60-day trial only. Gmail: Strict rate limits (500/day), requires app passwords, SMTP blocked on Railway. Resend uses HTTPS API which works everywhere.'
+          concept: 'Email Service Provider Comparison',
+          explanation: 'Evaluated three options: Resend offers 3,000 emails/month permanently free with simple REST API. SendGrid provides only 60-day trial then requires payment. Gmail SMTP has strict rate limits (500 emails/day), requires app-specific passwords, and SMTP ports are blocked on Railway. Resend chosen for: permanent free tier, HTTPS API compatibility, and production sustainability.'
         },
         {
-          q: 'How does RestTemplate work?',
-          a: 'Spring\'s HTTP client for making REST API calls. Provides methods like postForEntity, getForObject. Handles request/response serialization, exception handling. Can be customized with interceptors and error handlers.'
+          concept: 'RestTemplate HTTP Client',
+          explanation: 'Spring Framework\'s synchronous HTTP client for making REST API calls. Provides methods like postForEntity(), getForObject(), and exchange() for different HTTP operations. Handles request/response serialization using HttpMessageConverters. Supports interceptors for cross-cutting concerns (logging, authentication) and customizable error handlers. Thread-safe and can be configured as a bean with custom timeouts and connection pooling.'
         }
       ]
     },
@@ -784,14 +792,18 @@ public class CalendarService {
         }
       ],
       
-      interviewQuestions: [
+      technicalConcepts: [
         {
-          q: 'Explain OAuth 2.0 Authorization Code Flow',
-          a: '1) User clicks "Login with Google" → redirected to Google. 2) User grants permissions. 3) Google redirects back with authorization code. 4) Backend exchanges code for access_token and refresh_token. 5) Use access_token to call Google APIs.'
+          concept: 'OAuth 2.0 Authorization Code Flow',
+          explanation: 'Secure authentication flow: 1) User clicks "Login with Google" and is redirected to Google\'s authorization server. 2) User authenticates and grants permissions to the application. 3) Google redirects back to application with authorization code. 4) Backend exchanges code for access_token and refresh_token via server-to-server call. 5) Access token used to call Google APIs (Calendar, Gmail). This flow keeps client credentials secure on the server and provides refresh capability.'
         },
         {
-          q: 'How do you securely store OAuth tokens?',
-          a: 'Never store in localStorage (vulnerable to XSS). Store refresh_token in database (encrypted). Store access_token in server-side session or HTTP-only cookies. Implement token rotation and expiration.'
+          concept: 'Secure Token Storage Architecture',
+          explanation: 'Never store tokens in localStorage or sessionStorage (vulnerable to XSS attacks). Refresh tokens stored in database with encryption at rest (AES-256). Access tokens stored in server-side session or HTTP-only cookies (inaccessible to JavaScript). Implemented token rotation where refresh tokens are single-use and rotated on each refresh. Set appropriate expiration times: access tokens 1 hour, refresh tokens 30 days. Tokens invalidated on logout and stored securely with user association.'
+        },
+        {
+          concept: 'Token Lifecycle Management',
+          explanation: 'Implemented automatic token refresh: interceptor detects 401 responses, uses refresh_token to obtain new access_token, retries failed request transparently. Prevents user interruption and maintains session continuity. Handles edge cases: network failures during refresh, concurrent refresh attempts, expired refresh tokens requiring re-authentication.'
         }
       ]
     }
@@ -883,18 +895,20 @@ public class CalendarService {
             ))}
           </div>
 
-          {/* Interview Questions */}
-          <div className="section-card interview-section">
-            <h3>🎯 Interview Preparation</h3>
-            {modules[selectedModule].interviewQuestions.map((qa, index) => (
-              <div key={index} className="interview-qa">
-                <div className="interview-question">
-                  <strong>Q{index + 1}:</strong> {qa.q}
+          {/* Technical Deep Dive */}
+          <div className="section-card technical-section">
+            <h3>🔬 Technical Deep Dive</h3>
+            <p className="section-intro">Core concepts and architectural decisions for this module</p>
+            {modules[selectedModule].technicalConcepts.map((item, index) => (
+              <div key={index} className="technical-concept">
+                <div className="concept-title">
+                  <strong>{index + 1}. {item.concept}</strong>
                 </div>
-                <div className="interview-answer">
-                  <strong>A:</strong> {qa.a}
+                <div className="concept-explanation">
+                  {item.explanation}
                 </div>
               </div>
+            ))}
             ))}
           </div>
         </div>

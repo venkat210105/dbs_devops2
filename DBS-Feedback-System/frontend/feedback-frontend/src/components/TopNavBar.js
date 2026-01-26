@@ -22,9 +22,8 @@ const TopNavBar = ({ title = 'Feedback', icon = <TableRowsOutlinedIcon sx={{ ver
   <Button color="inherit" href="/dashboard" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Dashboard</Button>
         <Button color="inherit" href="/feedback-list" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Feedback List</Button>
   <Button color="inherit" href="/admin" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Admin</Button>
-  <Button color="inherit" href="/admin/users" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Users</Button>
+  <Button color="inherit" onClick={() => handleNavigation('/my-learning')} sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Info</Button>
   <Button color="inherit" href="/admin/agents" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Agents</Button>
-  <Button color="inherit" onClick={() => handleNavigation('/my-learning')} sx={{ textTransform: 'none', fontWeight: 600, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', cursor: 'pointer', '&:hover': { background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)' } }}>Info</Button>
       </Toolbar>
     </AppBar>
   );
