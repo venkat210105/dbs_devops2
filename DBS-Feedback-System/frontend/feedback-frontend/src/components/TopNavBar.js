@@ -3,9 +3,15 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import TableRowsOutlinedIcon from '@mui/icons-material/TableRowsOutlined';
 
 const TopNavBar = ({ title = 'Feedback', icon = <TableRowsOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} /> }) => {
+  const handleNavigation = (path) => {
+    window.location.href = path;
+  };
+
   return (
     <AppBar position="static" elevation={0} sx={{ backgroundColor: 'white', color: '#0b0f19', borderBottom: '1px solid #e5e7eb' }}>
       <Toolbar sx={{ maxWidth: 1200, width: '100%', margin: '0 auto' }}>
@@ -18,7 +24,7 @@ const TopNavBar = ({ title = 'Feedback', icon = <TableRowsOutlinedIcon sx={{ ver
   <Button color="inherit" href="/admin" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Admin</Button>
   <Button color="inherit" href="/admin/users" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Users</Button>
   <Button color="inherit" href="/admin/agents" sx={{ textTransform: 'none', fontWeight: 600, mr: 1 }}>Agents</Button>
-  <Button color="inherit" href="/my-learning" sx={{ textTransform: 'none', fontWeight: 600, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', '&:hover': { background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)' } }}>My Learning</Button>
+  <Button color="inherit" onClick={() => handleNavigation('/my-learning')} sx={{ textTransform: 'none', fontWeight: 600, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', cursor: 'pointer', '&:hover': { background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)' } }}>Info</Button>
       </Toolbar>
     </AppBar>
   );
