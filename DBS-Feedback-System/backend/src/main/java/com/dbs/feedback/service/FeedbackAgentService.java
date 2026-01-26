@@ -60,6 +60,10 @@ public class FeedbackAgentService {
     @org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
     private String senderEmail;
 
+    // DBS Employee email for notifications
+    @org.springframework.beans.factory.annotation.Value("${app.dbs.employee.email:venkatmariserla02@gmail.com}")
+    private String dbsEmployeeEmail;
+
     private final EmailService emailService;
     @org.springframework.beans.factory.annotation.Autowired
     private GoogleCalendarService googleCalendarService;
@@ -152,7 +156,7 @@ public class FeedbackAgentService {
         String dbsEmailBodyWithCalendar = dbsEmailBody + (isCritical ? ("\n\n" + calendarText) : "\n\nNo meeting scheduled (feedback not critical).");
         try {
             emailService.sendEmail(
-                techGuyEmail, // receiver
+                dbsEmployeeEmail, // DBS employee receives notification
                 (isCritical ? "⚠ Critical Feedback Received" : "Feedback Received"),
                 "From: " + senderEmail + "\nCustomer: " + String.valueOf(feedback.getEmail()) +
                 "\nMessage: " + dbsEmailBodyWithCalendar
