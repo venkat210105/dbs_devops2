@@ -25,7 +25,7 @@ railway login
 
 ### Step 3: Link to Your Project
 ```powershell
-cd d:\DBS_Devops\DBS-Feedback-System
+cd d:\Universal_Devops\Universal-Feedback-System
 railway link
 ```
 
@@ -118,7 +118,7 @@ Solution: Make sure the backend has run at least once to create tables, or manua
 Solution: The backup contains INSERT statements. If you need to update existing data:
 ```powershell
 # Export with INSERT IGNORE or REPLACE
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --insert-ignore dbs_feedback feedback > backup_feedback_safe.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --insert-ignore universal_feedback feedback > backup_feedback_safe.sql
 ```
 
 ### Issue: Connection timeout

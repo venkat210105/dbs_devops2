@@ -1,4 +1,4 @@
-# Netlify Deployment Guide for DBS Feedback System Frontend
+# Netlify Deployment Guide for Universal Feedback System Frontend
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@
 2. **Create New Site**
    - Click "Add new site" → "Import an existing project"
    - Connect your Git repository (GitHub/GitLab/Bitbucket)
-   - Select the DBS-Feedback-System repository
+   - Select the Universal-Feedback-System repository
 
 3. **Configure Build Settings**
    - **Base directory**: `frontend/feedback-frontend`

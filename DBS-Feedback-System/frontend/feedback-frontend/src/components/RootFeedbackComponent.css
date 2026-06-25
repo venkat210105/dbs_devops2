@@ -1,16 +1,16 @@
 /* Root Feedback Component Styles - minimal, clean navbar */
 
 :root {
-  --dbs-red: #EB0029;
-  --dbs-red-dark: #C8002A;
-  --dbs-black: #0B0F19;
-  --dbs-white: #FFFFFF;
-  --dbs-gray-50: #FAFAFA;
-  --dbs-gray-100: #F3F4F6;
-  --dbs-gray-200: #E5E7EB;
-  --dbs-gray-300: #D1D5DB;
-  --dbs-gray-600: #4B5563;
-  --dbs-gray-700: #374151;
+  --app-red: #EB0029;
+  --app-red-dark: #C8002A;
+  --app-black: #0B0F19;
+  --app-white: #FFFFFF;
+  --app-gray-50: #FAFAFA;
+  --app-gray-100: #F3F4F6;
+  --app-gray-200: #E5E7EB;
+  --app-gray-300: #D1D5DB;
+  --app-gray-600: #4B5563;
+  --app-gray-700: #374151;
   --radius-sm: 6px;
   --radius-md: 10px;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
@@ -19,15 +19,15 @@
 
 .root-feedback-container {
   min-height: 100vh;
-  background: var(--dbs-gray-50);
+  background: var(--app-gray-50);
 }
 
 .professional-navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: var(--dbs-white);
-  border-bottom: 1px solid var(--dbs-gray-200);
+  background: var(--app-white);
+  border-bottom: 1px solid var(--app-gray-200);
   box-shadow: var(--shadow-sm);
 }
 
@@ -38,21 +38,21 @@
   height: 64px;
 }
 
-.dbs-brand {
+.app-brand {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.dbs-logo-container { display:flex; align-items:center; gap:12px; }
-.dbs-logo-container-img { display:flex; align-items:center; }
-.dbs-logo-image { width: 120px; height: auto; display:block; object-fit: contain; }
+.app-logo-container { display:flex; align-items:center; gap:12px; }
+.app-logo-container-img { display:flex; align-items:center; }
+.app-logo-image { width: 120px; height: auto; display:block; object-fit: contain; }
 
 .brand-text { display:flex; flex-direction:column; }
 .brand-name { font-weight: 700; color: #111827; font-size: 1.1rem; }
 .brand-tagline { color: #6B7280; font-size: 0.8rem; }
 
-.system-title { border-left: 1px solid var(--dbs-gray-200); padding-left: 12px; margin-left: 6px; }
+.system-title { border-left: 1px solid var(--app-gray-200); padding-left: 12px; margin-left: 6px; }
 .title-main { font-weight: 600; color: #111827; font-size: 0.95rem; }
 .title-sub { color: #6B7280; font-size: 0.85rem; }
 
@@ -65,7 +65,7 @@
   display: inline-flex;
   align-items: center;
   padding: 8px 6px;
-  color: var(--dbs-gray-700);
+  color: var(--app-gray-700);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.97rem;
@@ -77,7 +77,7 @@
   position: absolute;
   left: 6px; right: 6px; bottom: 3px;
   height: 2px;
-  background: linear-gradient(90deg, var(--dbs-red), var(--dbs-red-dark));
+  background: linear-gradient(90deg, var(--app-red), var(--app-red-dark));
   opacity: 0; transform: scaleX(0.5);
   transform-origin: center;
   transition: opacity 140ms ease, transform 140ms ease;
@@ -95,24 +95,24 @@
   top: calc(100% + 8px);
   left: 0;
   min-width: 180px;
-  background: var(--dbs-white);
-  border: 1px solid var(--dbs-gray-200);
+  background: var(--app-white);
+  border: 1px solid var(--app-gray-200);
   border-radius: 10px;
   box-shadow: var(--shadow-lg);
   padding: 6px;
 }
 .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu { display:block; }
-.nav-dropdown-menu .nav-item { display:block; width:100%; padding: 8px 10px; border-radius: 6px; color: var(--dbs-gray-700); }
-.nav-dropdown-menu .nav-item:hover { background: var(--dbs-gray-100); color: var(--dbs-red); }
+.nav-dropdown-menu .nav-item { display:block; width:100%; padding: 8px 10px; border-radius: 6px; color: var(--app-gray-700); }
+.nav-dropdown-menu .nav-item:hover { background: var(--app-gray-100); color: var(--app-red); }
 
 .user-profile { display:flex; align-items:center; gap: 10px; }
 .user-avatar-initials {
   width: 28px; height: 28px; border-radius: 50%; display:grid; place-items:center;
   font-size: 12px; font-weight: 700; color:#fff;
-  background: linear-gradient(135deg, var(--dbs-red-dark), var(--dbs-red));
+  background: linear-gradient(135deg, var(--app-red-dark), var(--app-red));
   box-shadow: var(--shadow-sm);
 }
-.user-name { font-size: 0.95rem; font-weight: 600; color: var(--dbs-gray-700); }
+.user-name { font-size: 0.95rem; font-weight: 600; color: var(--app-gray-700); }
 
 .form-display-area { width: 100%; min-height: calc(100vh - 120px); }
 
@@ -124,14 +124,14 @@
     gap: 12px; 
   }
   
-  .dbs-brand { 
+  .app-brand { 
     gap: 8px; 
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
   
-  .dbs-logo-container {
+  .app-logo-container {
     flex-direction: column;
     gap: 8px;
     align-items: center;
@@ -161,7 +161,7 @@
     font-size: 0.9rem; 
   }
   
-  .dbs-logo-image { 
+  .app-logo-image { 
     width: 96px; 
   }
   
@@ -195,7 +195,7 @@
     padding: 10px 12px;
   }
   
-  .dbs-logo-image {
+  .app-logo-image {
     width: 80px;
   }
   

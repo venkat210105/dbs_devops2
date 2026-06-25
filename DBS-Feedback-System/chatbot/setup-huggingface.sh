@@ -1,7 +1,7 @@
 #!/bin/bash
 # Setup script for Hugging Face integration
 
-echo "🤗 Setting up DBS Chatbot with Hugging Face"
+echo "🤗 Setting up Universal Chatbot with Hugging Face"
 
 # Check if Python is installed
 if ! command -v python &> /dev/null; then

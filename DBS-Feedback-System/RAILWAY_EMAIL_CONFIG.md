@@ -48,7 +48,7 @@ EMAIL_USERNAME="venkatmariserla001@gmail.com"
 GOOGLE_CLIENT_SECRET="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"
 
 # Application URLs
-APP_UI_BASE_URL="https://dbs-feedback-frontend.netlify.app"
+APP_UI_BASE_URL="https://feedback-frontend.netlify.app"
 
 # Server Port
 PORT="8085"

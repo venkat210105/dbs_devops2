@@ -19,7 +19,7 @@ import axios from "axios";
 const functions = [
   {
     name: "submit_feedback",
-    description: "Submit customer feedback to DBS Bank system",
+    description: "Submit customer feedback to Universal Bank system",
     parameters: {
       type: "object",
       properties: {
@@ -58,7 +58,7 @@ const functions = [
         },
         businessUnit: {
           type: "string",
-          description: "DBS business unit",
+          description: "Universal business unit",
           enum: ["Retail Banking", "Corporate Banking", "Investment Banking", "Digital Bank", "Other"]
         }
       },
@@ -89,18 +89,18 @@ export async function handleMessage(req, res) {
     return res.status(400).json({ error: "Message is required" });
   }
 
-  // Enhanced system prompt for DBS assistant
+  // Enhanced system prompt for Universal assistant
   const system = {
     role: "system",
-    content: `You are a professional DBS Bank customer service assistant. Your role is to:
+    content: `You are a professional Universal Bank customer service assistant. Your role is to:
     
-    1. Help customers submit feedback about DBS banking services
+    1. Help customers submit feedback about Universal banking services
     2. Ask clarifying questions to gather complete feedback information
     3. Be professional, helpful, and empathetic
     4. Guide customers through the feedback process step by step
     5. Ensure you collect: customer name, email, rating (1-5), detailed feedback, service category, and service channel
     
-    Always maintain DBS Bank's professional standards and be courteous in all interactions.
+    Always maintain Universal Bank's professional standards and be courteous in all interactions.
     When you have sufficient information, use the submit_feedback function to process their feedback.`
   };
   
@@ -120,7 +120,7 @@ export async function handleMessage(req, res) {
           // Validate required fields
           if (!args.customerName || !args.userEmail || !args.rating || !args.feedback) {
             return res.json({ 
-              reply: "I need more information. Please provide your name, email, rating (1-5), and detailed feedback to submit your feedback to DBS Bank." 
+              reply: "I need more information. Please provide your name, email, rating (1-5), and detailed feedback to submit your feedback to Universal Bank." 
             });
           }
           
@@ -158,7 +158,7 @@ export async function handleMessage(req, res) {
         } catch (backendError) {
           console.error("Backend error:", backendError.message);
           return res.json({ 
-            reply: "I apologize, but there was an issue submitting your feedback to our system. Please try again later or contact DBS customer service directly.",
+            reply: "I apologize, but there was an issue submitting your feedback to our system. Please try again later or contact Universal customer service directly.",
             error: true
           });
         }
@@ -167,14 +167,14 @@ export async function handleMessage(req, res) {
       else if (fn.name === "get_feedback_status") {
         // Handle feedback status checking
         return res.json({ 
-          reply: "Feedback status checking is currently being implemented. Please contact DBS customer service for feedback status updates." 
+          reply: "Feedback status checking is currently being implemented. Please contact Universal customer service for feedback status updates." 
         });
       }
       
     } else {
       // Regular conversation response
       return res.json({ 
-        reply: choice?.message?.content || "I'm here to help you submit feedback to DBS Bank. How can I assist you today?" 
+        reply: choice?.message?.content || "I'm here to help you submit feedback to Universal Bank. How can I assist you today?" 
       });
     }
     
@@ -189,7 +189,7 @@ export async function handleMessage(req, res) {
     }
     
     return res.status(500).json({ 
-      error: "I'm experiencing technical difficulties. Please try again or contact DBS customer service." 
+      error: "I'm experiencing technical difficulties. Please try again or contact Universal customer service." 
     });
   }
 }

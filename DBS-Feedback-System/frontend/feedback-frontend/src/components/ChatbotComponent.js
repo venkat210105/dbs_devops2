@@ -5,7 +5,7 @@ const ChatbotComponent = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! I\'m your DBS Bank assistant. How can I help you submit feedback about your banking experience today?',
+      content: 'Hello! I\'m your Universal Bank assistant. How can I help you submit feedback about your banking experience today?',
       timestamp: new Date()
     }
   ]);
@@ -13,10 +13,10 @@ const ChatbotComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => {
     // Create a stable session id per tab load
-    const existing = sessionStorage.getItem('dbsChatSessionId');
+    const existing = sessionStorage.getItem('universalChatSessionId');
     if (existing) return existing;
     const id = `web-${Math.random().toString(36).slice(2, 10)}-${Date.now()}`;
-    sessionStorage.setItem('dbsChatSessionId', id);
+    sessionStorage.setItem('universalChatSessionId', id);
     return id;
   });
   const [isOpen, setIsOpen] = useState(false);
@@ -69,7 +69,7 @@ const ChatbotComponent = () => {
       console.error('Chatbot error:', error);
       const errorMessage = {
         role: 'assistant',
-        content: 'I apologize, but I\'m experiencing technical difficulties. Please try again or contact DBS customer service directly.',
+        content: 'I apologize, but I\'m experiencing technical difficulties. Please try again or contact customer service directly.',
         timestamp: new Date(),
         isError: true
       };
@@ -106,7 +106,7 @@ const ChatbotComponent = () => {
         const result = await response.json();
         const successMessage = {
           role: 'assistant',
-          content: `✅ Thank you ${feedbackData.customerName}! Your feedback has been successfully submitted to DBS Bank. 
+          content: `✅ Thank you ${feedbackData.customerName}! Your feedback has been successfully submitted. 
 
 📋 **Feedback Summary:**
 
@@ -122,7 +122,7 @@ We appreciate your ${feedbackData.rating}-star rating and will review your feedb
       console.error('Backend submission error:', error);
       const errorMessage = {
         role: 'assistant',
-        content: 'I was able to process your feedback, but there was an issue submitting it to our system. Please try again or contact DBS customer service.',
+        content: 'I was able to process your feedback, but there was an issue submitting it to our system. Please try again or contact customer service.',
         timestamp: new Date(),
         isError: true
       };
@@ -143,12 +143,12 @@ We appreciate your ${feedbackData.rating}-star rating and will review your feedb
       <button 
         className={`chatbot-toggle ${isOpen ? 'open' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle DBS Assistant"
+        aria-label="Toggle Feedback Assistant"
       >
         <div className="chatbot-icon">
           {isOpen ? '✕' : '💬'}
         </div>
-        <span className="chatbot-label">DBS Assistant</span>
+        <span className="chatbot-label">Feedback Assistant</span>
       </button>
 
       {/* Chatbot Window */}
@@ -157,9 +157,9 @@ We appreciate your ${feedbackData.rating}-star rating and will review your feedb
           {/* Header */}
           <div className="chatbot-header">
             <div className="chatbot-header-info">
-              <img src="/dbs-logo.png" alt="DBS" className="chatbot-logo" />
+              <img src="/logo.png" alt="Logo" className="chatbot-logo" />
               <div>
-                <h3>DBS Assistant</h3>
+                <h3>Feedback Assistant</h3>
                 <span className="status">🟢 Online</span>
               </div>
             </div>
@@ -208,7 +208,7 @@ We appreciate your ${feedbackData.rating}-star rating and will review your feedb
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type your message about DBS banking services..."
+              placeholder="Type your message about our services..."
               disabled={isLoading}
               rows={1}
             />
@@ -225,7 +225,7 @@ We appreciate your ${feedbackData.rating}-star rating and will review your feedb
           {/* Quick Actions */}
           <div className="quick-actions">
             <button 
-              onClick={() => setInputMessage('I want to give feedback about DBS mobile banking')}
+              onClick={() => setInputMessage('I want to give feedback about the mobile application')}
               disabled={isLoading}
             >
               📱 Mobile Banking Feedback

@@ -1,4 +1,4 @@
-# DBS Feedback System
+# Universal Feedback System
 
 A full-stack feedback collection and analytics platform with admin workflows and AI-assisted orchestration.
 

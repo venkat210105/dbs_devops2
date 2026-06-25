@@ -1,7 +1,7 @@
 # PowerShell Script to Import Data to Railway MySQL
 # Usage: .\import_to_railway.ps1
 
-Write-Host "=== DBS Feedback System - Railway Database Import ===" -ForegroundColor Cyan
+Write-Host "=== Universal Feedback System - Railway Database Import ===" -ForegroundColor Cyan
 Write-Host ""
 
 # Check if Railway CLI is installed

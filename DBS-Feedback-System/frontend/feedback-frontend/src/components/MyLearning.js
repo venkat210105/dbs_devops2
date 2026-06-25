@@ -8,7 +8,7 @@ const MyLearning = () => {
     frontend: {
       name: 'React Frontend Architecture',
       tech: 'React 18 • Material-UI • CSS Modules • Netlify',
-      deployment: 'https://dbs-feedback-frontend.netlify.app',
+      deployment: 'https://feedback-frontend.netlify.app',
       description: 'Enterprise-grade React application with real-time feedback management, sentiment visualization, and responsive design.',
       
       technicalDetails: {
@@ -25,7 +25,7 @@ const MyLearning = () => {
           title: 'API Integration with Axios',
           description: 'Centralized API configuration with base URL and interceptors',
           code: `// API configuration
-const API_BASE = 'https://dbsdevops2-production.up.railway.app';
+const API_BASE = 'https://universaldevops2-production.up.railway.app';
 const api = axios.create({
   baseURL: API_BASE,
   headers: { 'Content-Type': 'application/json' }
@@ -93,7 +93,7 @@ const fetchFeedbacks = async () => {
         },
         {
           problem: 'CORS Policy Blocking API Calls',
-          initial: 'Frontend hosted on Netlify (https://dbs-feedback-frontend.netlify.app) blocked from accessing Railway API',
+          initial: 'Frontend hosted on Netlify (https://feedback-frontend.netlify.app) blocked from accessing Railway API',
           solution: 'Configured Spring Security CORS with explicit origin whitelisting in backend',
           impact: 'Seamless cross-origin API communication'
         },
@@ -128,7 +128,7 @@ const fetchFeedbacks = async () => {
     backend: {
       name: 'Spring Boot REST API',
       tech: 'Spring Boot 3.5.0 • Java 21 • JPA • Railway',
-      deployment: 'https://dbsdevops2-production.up.railway.app',
+      deployment: 'https://universaldevops2-production.up.railway.app',
       description: 'Production-ready RESTful API with layered architecture, security, and cloud deployment.',
       
       technicalDetails: {
@@ -148,7 +148,7 @@ const fetchFeedbacks = async () => {
           description: 'Clean separation of concerns with service layer',
           code: `@RestController
 @RequestMapping("/api/feedback")
-@CrossOrigin(origins = {"https://dbs-feedback-frontend.netlify.app"})
+@CrossOrigin(origins = {"https://feedback-frontend.netlify.app"})
 public class FeedbackController {
     
     @Autowired
@@ -607,7 +607,7 @@ public class NotifyController {
         }
         
         String to = request.get("to");
-        String subject = request.getOrDefault("subject", "Test Email from DBS Feedback");
+        String subject = request.getOrDefault("subject", "Test Email from Universal Feedback");
         String message = request.getOrDefault("message", "This is a test email.");
         
         try {
@@ -630,7 +630,7 @@ public class NotifyController {
           description: 'Configuration in Railway dashboard',
           code: `# Railway Environment Variables (Set in dashboard)
 RESEND_API_KEY=re_GgBDgGpD_6jipmyZTTBFwNoHqg6RxqWHR
-RESEND_FROM_EMAIL=noreply@dbs-feedback.com
+RESEND_FROM_EMAIL=noreply@universal-feedback.com
 
 # application.properties
 resend.api.key=\${RESEND_API_KEY}
@@ -755,7 +755,7 @@ public class CalendarService {
         
         Map<String, Object> event = Map.of(
             "summary", "Feedback Review Meeting",
-            "description", "Scheduled via DBS Feedback System",
+            "description", "Scheduled via Universal Feedback System",
             "start", Map.of(
                 "dateTime", startTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 "timeZone", "Asia/Singapore"
@@ -781,7 +781,7 @@ public class CalendarService {
         {
           problem: 'OAuth Redirect URI Mismatch',
           initial: 'Production deployment failed OAuth with "redirect_uri_mismatch" error',
-          solution: 'Added both local (http://localhost:8080/oauth/google/callback) and production (https://dbsdevops2-production.up.railway.app/oauth/google/callback) URIs to Google Cloud Console',
+          solution: 'Added both local (http://localhost:8080/oauth/google/callback) and production (https://universaldevops2-production.up.railway.app/oauth/google/callback) URIs to Google Cloud Console',
           impact: 'OAuth works in both dev and prod environments'
         },
         {
@@ -813,7 +813,7 @@ public class CalendarService {
     <div className="learning-portal">
       <div className="portal-header">
         <h1>📚 Technical Deep Dive</h1>
-        <p className="portal-subtitle">DBS Feedback System - Full Stack Architecture & Implementation</p>
+        <p className="portal-subtitle">Universal Feedback System - Full Stack Architecture & Implementation</p>
       </div>
 
       {/* Quick Navigation */}

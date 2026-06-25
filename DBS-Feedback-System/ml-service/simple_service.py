@@ -5,14 +5,14 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-class SimpleDBS:
+class SimpleUniversal:
     def __init__(self):
         self.conversations = {}
     
     def process_message(self, messages, functions):
         """Simple conversation processor"""
         if not messages:
-            return "Hello! I'm your DBS assistant. How can I help you submit feedback?"
+            return "Hello! I'm your Universal assistant. How can I help you submit feedback?"
         
         # Get user messages
         user_msgs = [m['content'] for m in messages if m['role'] == 'user']
@@ -75,14 +75,14 @@ class SimpleDBS:
         else:
             return "I have all the info! Ready to submit your feedback?"
 
-assistant = SimpleDBS()
+assistant = SimpleUniversal()
 
 @app.route('/health')
 def health():
     return jsonify({
         'status': 'healthy',
-        'service': 'DBS Hugging Face Assistant',
-        'model': 'Simple DBS Banking Assistant'
+        'service': 'Universal Hugging Face Assistant',
+        'model': 'Simple Universal Banking Assistant'
     })
 
 @app.route('/chat', methods=['POST'])
@@ -118,5 +118,5 @@ def chat():
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Simple DBS Service starting on port 5001...")
+    print("🚀 Simple Universal Service starting on port 5001...")
     app.run(host='0.0.0.0', port=5001, debug=False)

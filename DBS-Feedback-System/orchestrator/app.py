@@ -29,7 +29,7 @@ class OrchestrateResponse(BaseModel):
 class OrchestratorState(Dict[str, Any]):
     pass
 
-app = FastAPI(title="DBS Orchestrator", version="0.1.0")
+app = FastAPI(title="Universal Orchestrator", version="0.1.0")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("orchestrator")
 
@@ -354,7 +354,7 @@ async def import_implicit(request: Request):
                     if urgency in ("HIGH", "CRITICAL"):
                         try:
                             await client.post(f"{BACKEND_URL}/admin/notify", json={
-                                "to": "team-notify@dbs.com",
+                                "to": "team-notify@universal.com",
                                 "subject": f"{urgency} implicit alert: {summary}",
                                 "body": f"Feedback #{fid} created for {s.pageUrl}. Reason: {reason}."
                             })

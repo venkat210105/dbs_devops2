@@ -1,7 +1,7 @@
 @echo off
 REM Setup script for Hugging Face integration on Windows
 
-echo 🤗 Setting up DBS Chatbot with Hugging Face
+echo 🤗 Setting up Universal Chatbot with Hugging Face
 
 REM Check if Python is installed
 python --version >nul 2>&1

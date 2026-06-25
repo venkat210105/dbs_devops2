@@ -1,4 +1,4 @@
-# DBS Chatbot - Hugging Face Service
+# Universal Chatbot - Hugging Face Service
 # Free alternative to OpenAI using Hugging Face transformers
 
 import json
@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 # Simple rule-based service that mimics AI responses
-class DBSBankingAssistant:
+class UniversalBankingAssistant:
     def __init__(self):
         # Banking service categories
         self.service_categories = [
@@ -24,16 +24,16 @@ class DBSBankingAssistant:
         # Conversation state tracking
         self.conversation_state = {}
         
-        # DBS responses for different intents
+        # Universal responses for different intents
         self.responses = {
             'greeting': [
-                "Hello! I'm your DBS Bank assistant. How can I help you submit feedback today?",
-                "Welcome to DBS Bank feedback service. I'm here to assist you with your banking experience.",
-                "Good day! I'm ready to help you share your feedback about DBS services."
+                "Hello! I'm your Universal Bank assistant. How can I help you submit feedback today?",
+                "Welcome to Universal Bank feedback service. I'm here to assist you with your banking experience.",
+                "Good day! I'm ready to help you share your feedback about Universal services."
             ],
             'feedback_intent': [
-                "I'd be happy to help you submit feedback about your DBS banking experience. Could you tell me which service you'd like to provide feedback about?",
-                "Thank you for wanting to share your experience with us. What specific DBS service would you like to give feedback on?",
+                "I'd be happy to help you submit feedback about your Universal banking experience. Could you tell me which service you'd like to provide feedback about?",
+                "Thank you for wanting to share your experience with us. What specific Universal service would you like to give feedback on?",
                 "I can help you submit detailed feedback. Please let me know about your recent banking experience."
             ],
             'service_inquiry': [
@@ -224,7 +224,7 @@ class DBSBankingAssistant:
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": "Hello! I'm your DBS Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
+                        "content": "Hello! I'm your Universal Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
                     }
                 }]
             }
@@ -264,7 +264,7 @@ class DBSBankingAssistant:
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": "I'd be happy to help you submit feedback about your DBS banking experience! To get started, could you please tell me your full name?"
+                        "content": "I'd be happy to help you submit feedback about your Universal banking experience! To get started, could you please tell me your full name?"
                     }
                 }]
             }
@@ -303,9 +303,9 @@ class DBSBankingAssistant:
         # Default response for initial contact or general queries
         import random
         default_responses = [
-            "Hello! I'm your DBS Bank assistant. I can help you submit feedback about your banking experience. What would you like to share?",
-            "Thank you for contacting DBS Bank. I'm here to help you provide feedback about our services. How can I assist you?",
-            "I'm ready to help you submit feedback about any DBS banking services. What's your experience been like?"
+            "Hello! I'm your Universal Bank assistant. I can help you submit feedback about your banking experience. What would you like to share?",
+            "Thank you for contacting Universal Bank. I'm here to help you provide feedback about our services. How can I assist you?",
+            "I'm ready to help you submit feedback about any Universal banking services. What's your experience been like?"
         ]
         
         return {
@@ -322,7 +322,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Initialize the assistant
-assistant = DBSBankingAssistant()
+assistant = UniversalBankingAssistant()
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -351,8 +351,8 @@ def health():
     """Health check endpoint"""
     return jsonify({
         "status": "healthy",
-        "service": "DBS Hugging Face Assistant",
-        "model": "Custom DBS Banking Assistant"
+        "service": "Universal Hugging Face Assistant",
+        "model": "Custom Universal Banking Assistant"
     })
 
 # Test function
@@ -365,7 +365,7 @@ def test_assistant():
         {"role": "user", "content": "Submit my feedback please"}
     ]
     
-    print("🧪 Testing DBS Banking Assistant:")
+    print("🧪 Testing Universal Banking Assistant:")
     for i, test_msg in enumerate(test_cases, 1):
         result = assistant.generate_response([test_msg])
         print(f"\nTest {i}:")
@@ -376,5 +376,5 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "test":
         test_assistant()
     else:
-        print("🤗 Starting DBS Hugging Face Service on port 5001")
+        print("🤗 Starting Universal Hugging Face Service on port 5001")
         app.run(host='0.0.0.0', port=5001, debug=True)

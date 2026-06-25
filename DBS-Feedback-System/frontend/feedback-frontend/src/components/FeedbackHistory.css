@@ -1,15 +1,15 @@
 /* Feedback History Styles */
 
-/* DBS Brand Variables */
+/* Universal Brand Variables */
 :root {
-  --dbs-red: #EB0029;
-  --dbs-red-dark: #C8002A;
-  --dbs-red-light: #FF1744;
-  --dbs-black: #000000;
-  --dbs-white: #FFFFFF;
-  --dbs-gray-50: #FAFAFA;
-  --dbs-gray-100: #F5F5F5;
-  --dbs-gray-200: #EEEEEE;
+  --app-red: #EB0029;
+  --app-red-dark: #C8002A;
+  --app-red-light: #FF1744;
+  --app-black: #000000;
+  --app-white: #FFFFFF;
+  --app-gray-50: #FAFAFA;
+  --app-gray-100: #F5F5F5;
+  --app-gray-200: #EEEEEE;
 }
 
 /* Feedback History - Clean corporate styling using global tokens */

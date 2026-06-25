@@ -1,4 +1,4 @@
-# DBS Feedback System - Complete Project Documentation
+# Universal Feedback System - Complete Project Documentation
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -16,7 +16,7 @@
 
 ## 1. Project Overview
 
-**DBS Feedback System** is a full-stack enterprise feedback collection and analytics platform with AI-assisted orchestration for DBS Bank customers.
+**Universal Feedback System** is a full-stack enterprise feedback collection and analytics platform with AI-assisted orchestration for Universal Bank customers.
 
 ### Purpose
 - Collect customer feedback through multiple channels (Web UI, Chatbot, Email, CSV Import)
@@ -129,7 +129,7 @@
 
 ### 4.1 Frontend (React + Nginx)
 
-**Container**: `dbs-feedback-frontend`
+**Container**: `feedback-frontend`
 **Port**: 3000:80
 
 #### Key Components
@@ -144,7 +144,7 @@
 
 **RootFeedbackComponent.js** - Home page
 ```javascript
-- Professional navbar with DBS branding
+- Professional navbar with Universal branding
 - Navigation to feedback list and admin
 - Renders EnhancedFeedbackForm
 ```
@@ -204,7 +204,7 @@ Tracks user behavior:
 
 ### 4.2 Backend (Spring Boot Java)
 
-**Container**: `dbs-feedback-backend`
+**Container**: `feedback-backend`
 **Port**: 8085
 
 #### Main Application
@@ -566,7 +566,7 @@ Custom queries:
 
 ### 4.3 Orchestrator (FastAPI + LangGraph)
 
-**Container**: `dbs-orchestrator`
+**Container**: `orchestrator`
 **Port**: 5050
 
 **app.py** - Main FastAPI application
@@ -620,7 +620,7 @@ Logic:
 Purpose: Determine service category and channel
 Logic:
 - Uses LLM or rule-based classification
-- Maps feedback to DBS service categories
+- Maps feedback to Universal service categories
 - Infers channel (Chatbot, Online, Branch, etc.)
 ```
 
@@ -678,7 +678,7 @@ async def persist_feedback(feedback: dict)
 
 ### 4.4 ML Service (FastAPI + Transformers)
 
-**Container**: `dbs-feedback-ml-service`
+**Container**: `feedback-ml-service`
 **Port**: 5000
 
 **sentiment_service.py** (or enhanced_sentiment_service.py)
@@ -731,7 +731,7 @@ When ML_MODE=mock (default for fast startup):
 
 ### 4.5 Chatbot API (Node.js Express)
 
-**Container**: `dbs-chatbot-api`
+**Container**: `chatbot-api`
 **Port**: 4002
 
 **app.js** - Main Express server
@@ -742,7 +742,7 @@ When ML_MODE=mock (default for fast startup):
 GET /health
 Returns: { 
   status: "healthy", 
-  service: "DBS Chatbot Service",
+  service: "Universal Chatbot Service",
   aiService: "orchestrator" | "huggingface",
   timestamp 
 }
@@ -788,13 +788,13 @@ Purpose: Interface with Python HF service
 
 ### 4.6 HF-like Chat Service (Python Flask)
 
-**Container**: `dbs-chatbot-hf`
+**Container**: `chatbot-hf`
 **Port**: 5001
 
 **services/huggingfaceService.py**
 
 ```python
-EnhancedDBSAssistant class:
+EnhancedUniversalAssistant class:
 
 extract_info_from_conversation(messages):
 - Parses full conversation history
@@ -989,7 +989,7 @@ CREATE TABLE page_views (
 
 ### Backend Java Package Structure
 ```
-com.dbs.feedback/
+com.universal.feedback/
 ├── Application.java              # Main Spring Boot application
 ├── WebConfig.java                # CORS configuration
 ├── SecurityConfig.java           # Security settings
@@ -1392,7 +1392,7 @@ UI displays timeline of user's feedback
 
 **Start all services**:
 ```powershell
-cd DBS-Feedback-System
+cd Universal-Feedback-System
 docker compose up -d --build
 ```
 
@@ -1416,9 +1416,9 @@ docker compose up -d --build backend
 
 **Backend (.env or docker-compose.yml)**:
 ```bash
-MYSQL_DATABASE=dbs_feedback
-MYSQL_USER=dbsuser
-MYSQL_PASSWORD=dbspass123
+MYSQL_DATABASE=universal_feedback
+MYSQL_USER=universal_user
+MYSQL_PASSWORD=universal_pass123
 MYSQL_PORT=3307
 
 SPRING_PROFILES_ACTIVE=docker
@@ -1475,7 +1475,7 @@ FRONTEND_URL=http://localhost:3000
 **Deploy**:
 ```bash
 kubectl apply -f k8s/
-kubectl get pods -n dbs-feedback
+kubectl get pods -n universal-feedback
 ```
 
 ### 10.4 CI/CD Pipeline (Jenkins)
@@ -1506,7 +1506,7 @@ cd backend
 ```
 
 **Test Structure**:
-- `src/test/java/com/dbs/feedback/`
+- `src/test/java/com/universal/feedback/`
   - `controller/` - REST endpoint tests (MockMvc)
   - `service/` - Business logic tests (Mockito)
   - `repository/` - Data access tests (H2 in-memory)

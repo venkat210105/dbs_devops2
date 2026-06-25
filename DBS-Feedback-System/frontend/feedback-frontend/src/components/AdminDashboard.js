@@ -144,7 +144,7 @@ function AdminDashboard() {
 
   return (
     <Box sx={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <TopNavBar title="DBS Admin Dashboard" icon={<BarChartOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
+      <TopNavBar title="Admin Dashboard" icon={<BarChartOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
       <Box sx={{ position:'sticky', top:0, zIndex: 1, background:'#f8fafc' }}>
         <Box sx={{ display:'flex', justifyContent:'flex-end', gap:1, py:1 }}>
           <Button variant="outlined" size="small" href="#implicit-analytics-section" sx={{ textTransform:'none', borderColor:'#0b0f19', color:'#0b0f19', '&:hover':{ background:'#0b0f19', color:'#fff', borderColor:'#0b0f19' }}}>

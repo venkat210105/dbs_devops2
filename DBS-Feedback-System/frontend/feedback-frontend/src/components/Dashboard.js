@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   return (
     <div className={`dashboard-container light-mode`}>
-      <TopNavBar title="DBS Admin Dashboard" icon={<BarChartOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
+      <TopNavBar title="Admin Dashboard" icon={<BarChartOutlinedIcon sx={{ verticalAlign: 'middle', mr: 1, color: '#0b0f19' }} />} />
       {oauthCode && (
         <div className="oauth-code-banner">
           <p>Received OAuth code: <b>{oauthCode}</b></p>

@@ -357,13 +357,13 @@ The system successfully integrated multiple feedback channels (web, chatbot, ema
 
 Future work will focus on aspect-based sentiment analysis, predictive churn modeling, multi-language support, and graph-based relationship analytics. The open-source nature of core components enables broad adoption and community-driven enhancement.
 
-**Availability**: System architecture, anonymized dataset, and deployment configurations are available at: https://github.com/dbs-devops/feedback-system
+**Availability**: System architecture, anonymized dataset, and deployment configurations are available at: https://github.com/universal-devops/feedback-system
 
 ---
 
 ## ACKNOWLEDGMENT
 
-The authors thank DBS Bank IT team for providing infrastructure support and domain expertise. We acknowledge the Hugging Face community for pre-trained transformer models and the Spring Boot team for the excellent framework.
+The authors thank Universal Bank IT team for providing infrastructure support and domain expertise. We acknowledge the Hugging Face community for pre-trained transformer models and the Spring Boot team for the excellent framework.
 
 ---
 

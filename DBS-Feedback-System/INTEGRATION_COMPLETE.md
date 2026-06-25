@@ -1,4 +1,4 @@
-# 🚀 DBS Banking Feedback System - Complete Integration Guide
+# 🚀 Universal Banking Feedback System - Complete Integration Guide
 
 ## 🏗️ System Architecture
 
@@ -8,7 +8,7 @@
 │                 React Frontend                       │
 │                 (Port 3000)                         │
 │  ┌─────────────────┐    ┌─────────────────────────┐ │
-│  │  DBS UI/UX      │    │   Chatbot Component     │ │
+│  │  Universal UI/UX      │    │   Chatbot Component     │ │
 │  │  Components     │    │   (AI Assistant)        │ │
 │  └─────────────────┘    └─────────────────────────┘ │
 └─────────────┬─────────────────────┬─────────────────┘
@@ -18,7 +18,7 @@
 │            Spring Boot Backend                      │
 │              (Port 8085)                           │
 │  ┌─────────────────────────────────────────────────┐ │
-│  │        DBS Feedback API                         │ │
+│  │        Universal Feedback API                         │ │
 │  │   - Submit Feedback                             │ │
 │  │   - Get Feedback History                        │ │
 │  │   - Analytics Dashboard                         │ │
@@ -30,7 +30,7 @@
 │             Hugging Face AI Service                 │
 │               (Port 5001)                          │
 │  ┌─────────────────────────────────────────────────┐ │
-│  │        DBS Banking Assistant                    │ │
+│  │        Universal Banking Assistant                    │ │
 │  │   - Natural Language Processing                 │ │
 │  │   - Intent Recognition                          │ │
 │  │   - Function Calling                           │ │
@@ -51,10 +51,10 @@ sequenceDiagram
     participant Backend
     participant DB as Database
 
-    User->>Frontend: Opens DBS Banking App
+    User->>Frontend: Opens Universal Banking App
     Frontend->>Chatbot: Initialize Chatbot Component
     Chatbot->>HF: Health Check (Port 5001)
-    HF-->>Chatbot: ✅ DBS Assistant Ready
+    HF-->>Chatbot: ✅ Feedback Assistant Ready
 
     User->>Chatbot: "I want to give feedback about mobile banking"
     Chatbot->>HF: POST /chat (with conversation context)
@@ -85,17 +85,17 @@ sequenceDiagram
 
 ```powershell
 # Terminal 1: Start Hugging Face AI Service
-cd "d:\DBS_Devops\DBS-Feedback-System\ml-service"
+cd "d:\Universal_Devops\Universal-Feedback-System\ml-service"
 python sentiment_service.py
-# Expected: ✅ DBS Banking Assistant running on port 5001
+# Expected: ✅ Universal Banking Assistant running on port 5001
 
 # Terminal 2: Start Spring Boot Backend  
-cd "d:\DBS_Devops\DBS-Feedback-System\backend"
+cd "d:\Universal_Devops\Universal-Feedback-System\backend"
 ./mvnw spring-boot:run
 # Expected: ✅ Backend API running on port 8085
 
 # Terminal 3: Start React Frontend
-cd "d:\DBS_Devops\DBS-Feedback-System\frontend\feedback-frontend" 
+cd "d:\Universal_Devops\Universal-Feedback-System\frontend\feedback-frontend" 
 npm start
 # Expected: ✅ Frontend running on port 3000, browser opens automatically
 ```
@@ -105,7 +105,7 @@ npm start
 1. **Frontend Access**: http://localhost:3000
 2. **Backend Health**: http://localhost:8085/api/feedback/all
 3. **AI Service Health**: http://localhost:5001/health
-4. **Chatbot Integration**: Click "DBS Assistant" button on frontend
+4. **Chatbot Integration**: Click "Feedback Assistant" button on frontend
 
 ## 💬 Chatbot Features
 
@@ -125,7 +125,7 @@ AI: "That's wonderful to hear! I'd like to help you submit this positive feedbac
      2. Email address  
      3. A rating from 1-5 stars
      
-     This will help DBS improve our mobile banking services."
+     This will help Universal improve our mobile banking services."
 
 User: "Sure! I'm John Smith, john.smith@email.com, and I'd rate it 5 stars"
 AI: ✅ "Thank you John! Your 5-star feedback has been submitted successfully! 
@@ -149,7 +149,7 @@ AI: ✅ "Thank you Sarah! Your feedback about the Orchard branch wait time has b
 ## 🔧 Technical Features
 
 ### **Frontend Integration**
-- **React Component**: `ChatbotComponent.js` - Floating chatbot with professional DBS styling
+- **React Component**: `ChatbotComponent.js` - Floating chatbot with professional Universal styling
 - **Real-time Communication**: Direct HTTP calls to Hugging Face service (Port 5001)
 - **Auto-submission**: Seamless integration with Spring Boot backend for feedback storage
 - **Responsive Design**: Mobile-friendly chatbot interface
@@ -158,7 +158,7 @@ AI: ✅ "Thank you Sarah! Your feedback about the Orchard branch wait time has b
 - **Intent Recognition**: Identifies customer needs (feedback, complaints, praise)
 - **Context Management**: Maintains conversation state and customer information
 - **Function Calling**: Automatically triggers feedback submission when appropriate
-- **Banking Domain**: Specialized knowledge of DBS services and terminology
+- **Banking Domain**: Specialized knowledge of Universal services and terminology
 
 ### **Backend Integration**
 - **RESTful API**: Accepts chatbot-generated feedback submissions
@@ -169,12 +169,12 @@ AI: ✅ "Thank you Sarah! Your feedback about the Orchard branch wait time has b
 
 ### **✅ Complete Integration Checklist**
 
-- [x] **Hugging Face AI Service**: Running on port 5001 with DBS banking intelligence
+- [x] **Hugging Face AI Service**: Running on port 5001 with Universal banking intelligence
 - [x] **Spring Boot Backend**: API endpoints active on port 8085
 - [x] **React Frontend**: UI components with integrated chatbot on port 3000
-- [x] **Chatbot Component**: Floating assistant with DBS branding and functionality
+- [x] **Chatbot Component**: Floating assistant with Universal branding and functionality
 - [x] **AI-Backend Connection**: Seamless feedback submission from chatbot to database
-- [x] **Professional UI**: DBS-branded chatbot with typing indicators and error handling
+- [x] **Professional UI**: Universal-branded chatbot with typing indicators and error handling
 - [x] **Function Calling**: AI automatically submits feedback when customer provides complete information
 - [x] **Multi-Service Communication**: All three tiers communicating successfully
 
@@ -182,7 +182,7 @@ AI: ✅ "Thank you Sarah! Your feedback about the Orchard branch wait time has b
 
 #### **Test Scenario 1: Complete Feedback Flow**
 1. Open React app at http://localhost:3000
-2. Click "DBS Assistant" button
+2. Click "Feedback Assistant" button
 3. Type: "I want to give feedback about excellent online banking experience"
 4. Follow AI prompts to provide name, email, rating
 5. Verify feedback appears in backend database
@@ -202,7 +202,7 @@ Invoke-RestMethod -Uri "http://localhost:8085/api/feedback/all"  # Backend
 - **24/7 Availability**: AI assistant available anytime for feedback submission
 - **Natural Interaction**: Conversational interface instead of rigid forms
 - **Instant Processing**: Real-time feedback submission and confirmation
-- **Professional Service**: DBS-branded experience with banking domain expertise
+- **Professional Service**: Universal-branded experience with banking domain expertise
 
 ### **Business Value**
 - **Increased Feedback Volume**: Easier submission process encourages more customer input
@@ -226,9 +226,9 @@ Invoke-RestMethod -Uri "http://localhost:8085/api/feedback/all"  # Backend
 
 ---
 
-## 🏁 Success! Complete DBS Integration Achieved
+## 🏁 Success! Complete Universal Integration Achieved
 
-Your DBS Banking Feedback System now features:
+Your Universal Banking Feedback System now features:
 - **Professional React Frontend** with modern UI/UX
 - **Intelligent AI Chatbot** with banking domain expertise  
 - **Robust Spring Boot Backend** with RESTful APIs

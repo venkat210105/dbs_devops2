@@ -1,4 +1,4 @@
-# DBS Chatbot - Enhanced Conversation Flow Service
+# Universal Chatbot - Enhanced Conversation Flow Service
 # Improved feedback collection with better conversation management
 
 import json
@@ -6,7 +6,7 @@ import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-class EnhancedDBSAssistant:
+class EnhancedUniversalAssistant:
     def __init__(self):
         self.service_categories = [
             "Account Services", "Loan Services", "Investment Services", 
@@ -127,7 +127,7 @@ class EnhancedDBSAssistant:
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": "Hello! I'm your DBS Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
+                        "content": "Hello! I'm your Universal Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
                     }
                 }]
             }
@@ -175,7 +175,7 @@ class EnhancedDBSAssistant:
                     "choices": [{
                         "message": {
                             "role": "assistant",
-                            "content": "I'd be happy to help you submit feedback about your DBS banking experience! 🏦\n\nTo get started, I'll need:\n• Your name\n• Email address  \n• A rating (1-5 stars)\n• Details about your experience\n\nWhat's your name?"
+                            "content": "I'd be happy to help you submit feedback about your Universal banking experience! 🏦\n\nTo get started, I'll need:\n• Your name\n• Email address  \n• A rating (1-5 stars)\n• Details about your experience\n\nWhat's your name?"
                         }
                     }]
                 }
@@ -184,7 +184,7 @@ class EnhancedDBSAssistant:
                     "choices": [{
                         "message": {
                             "role": "assistant",
-                            "content": "Hello! I'm your DBS Banking assistant. I can help you submit feedback about your banking experience. Would you like to share some feedback about our services?"
+                            "content": "Hello! I'm your Universal Banking assistant. I can help you submit feedback about your banking experience. Would you like to share some feedback about our services?"
                         }
                     }]
                 }
@@ -213,7 +213,7 @@ class EnhancedDBSAssistant:
         
         # Ask for rating
         if 'rating' in missing:
-            service = info['service_category'] if info['service_category'] != 'Other' else "DBS services"
+            service = info['service_category'] if info['service_category'] != 'Other' else "Universal services"
             return {
                 "choices": [{
                     "message": {
@@ -239,7 +239,7 @@ class EnhancedDBSAssistant:
             "choices": [{
                 "message": {
                     "role": "assistant",
-                    "content": "Perfect! I have all the information needed:\n✅ Name, Email, Rating, and Feedback\n\nWould you like me to submit your feedback to DBS now?"
+                    "content": "Perfect! I have all the information needed:\n✅ Name, Email, Rating, and Feedback\n\nWould you like me to submit your feedback to Universal now?"
                 }
             }]
         }
@@ -247,14 +247,14 @@ class EnhancedDBSAssistant:
 # Flask Application
 app = Flask(__name__)
 CORS(app)
-assistant = EnhancedDBSAssistant()
+assistant = EnhancedUniversalAssistant()
 
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({
         'status': 'healthy',
-        'service': 'DBS Hugging Face Assistant',
-        'model': 'Enhanced DBS Banking Assistant'
+        'service': 'Universal Hugging Face Assistant',
+        'model': 'Enhanced Universal Banking Assistant'
     })
 
 @app.route('/chat', methods=['POST'])
@@ -273,16 +273,16 @@ def chat():
             'choices': [{
                 'message': {
                     'role': 'assistant',
-                    'content': 'I apologize for the technical issue. Please try again or contact DBS customer service directly.'
+                    'content': 'I apologize for the technical issue. Please try again or contact Universal customer service directly.'
                 }
             }]
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Enhanced DBS Banking Assistant Starting...")
+    print("🚀 Enhanced Universal Banking Assistant Starting...")
     print("🔧 Features: Intelligent conversation flow, complete info extraction")
     print("📍 Running on: http://localhost:5001")
-    print("💬 Ready to collect DBS customer feedback!")
+    print("💬 Ready to collect Universal customer feedback!")
     print("-" * 60)
     
     app.run(host='0.0.0.0', port=5001, debug=False)

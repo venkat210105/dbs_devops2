@@ -9,7 +9,7 @@ router.post("/test", handleMessage);
 // Add a simple test endpoint
 router.get("/test", (req, res) => {
   res.json({
-    message: "DBS Chatbot Test Endpoint",
+    message: "Universal Chatbot Test Endpoint",
     status: "ready",
     mockMode: true,
     usage: {

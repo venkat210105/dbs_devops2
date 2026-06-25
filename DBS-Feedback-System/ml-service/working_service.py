@@ -1,4 +1,4 @@
-# Minimal Working DBS Chatbot Service
+# Minimal Working Universal Chatbot Service
 import json
 import re
 from flask import Flask, request, jsonify
@@ -7,7 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-class MinimalDBSAssistant:
+class MinimalUniversalAssistant:
     def __init__(self):
         self.conversation_state = {}
     
@@ -81,7 +81,7 @@ class MinimalDBSAssistant:
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": "Hello! I'm your DBS Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
+                        "content": "Hello! I'm your Universal Bank assistant. I'm here to help you submit feedback about your banking experience. How can I assist you today?"
                     }
                 }]
             }
@@ -116,7 +116,7 @@ class MinimalDBSAssistant:
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": "Great! I'd love to help you submit feedback about your DBS banking experience. First, could you please tell me your full name?"
+                        "content": "Great! I'd love to help you submit feedback about your Universal banking experience. First, could you please tell me your full name?"
                     }
                 }]
             }
@@ -163,14 +163,14 @@ class MinimalDBSAssistant:
         }
 
 # Initialize assistant
-assistant = MinimalDBSAssistant()
+assistant = MinimalUniversalAssistant()
 
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({
         'status': 'healthy',
-        'service': 'DBS Hugging Face Assistant',
-        'model': 'Minimal DBS Banking Assistant'
+        'service': 'Universal Hugging Face Assistant',
+        'model': 'Minimal Universal Banking Assistant'
     })
 
 @app.route('/chat', methods=['POST'])
@@ -189,14 +189,14 @@ def chat():
             'choices': [{
                 'message': {
                     'role': 'assistant',
-                    'content': f'I apologize, but I encountered an error: {str(e)}. Please try again or contact DBS customer service directly.'
+                    'content': f'I apologize, but I encountered an error: {str(e)}. Please try again or contact Universal customer service directly.'
                 }
             }]
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Minimal DBS Service Starting...")
+    print("🚀 Minimal Universal Service Starting...")
     print("📍 Running on: http://localhost:5001")
-    print("💬 Ready for DBS feedback collection!")
+    print("💬 Ready for Universal feedback collection!")
     
     app.run(host='0.0.0.0', port=5001, debug=False)

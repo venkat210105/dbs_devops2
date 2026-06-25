@@ -5,9 +5,9 @@ This document lists key configuration entries and environment variables.
 ## Backend (Spring Boot)
 
 - Database
-  - `SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dbs_feedback?...`
-  - `SPRING_DATASOURCE_USERNAME=dbsuser`
-  - `SPRING_DATASOURCE_PASSWORD=dbspass123`
+  - `SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/universal_feedback?...`
+  - `SPRING_DATASOURCE_USERNAME=universal_user`
+  - `SPRING_DATASOURCE_PASSWORD=universal_pass123`
   - `SPRING_JPA_HIBERNATE_DDL_AUTO=update`
 - Orchestrator forwarding
   - `orchestrator.url` (default `http://orchestrator:5050`)
@@ -57,7 +57,7 @@ Notes:
 
 ## MySQL
 
-- `MYSQL_DATABASE=dbs_feedback`
-- `MYSQL_USER=dbsuser`
-- `MYSQL_PASSWORD=dbspass123`
+- `MYSQL_DATABASE=universal_feedback`
+- `MYSQL_USER=universal_user`
+- `MYSQL_PASSWORD=universal_pass123`
 - `MYSQL_PORT=3307` (host port)

@@ -70,7 +70,7 @@ docker compose logs -f backend
 
 ## Environment Variables (compose defaults)
 
-- MySQL: `MYSQL_DATABASE=dbs_feedback`, `MYSQL_USER=dbsuser`, `MYSQL_PASSWORD=dbspass123`, `MYSQL_PORT=3307`
+- MySQL: `MYSQL_DATABASE=universal_feedback`, `MYSQL_USER=universal_user`, `MYSQL_PASSWORD=universal_pass123`, `MYSQL_PORT=3307`
 - Backend: `SPRING_PROFILES_ACTIVE=docker`, DB URL points to `mysql`
 - Orchestrator: `BACKEND_URL=http://backend:8085`, `ML_URL=http://ml-service:5000`
 - Frontend: `REACT_APP_API_URL=http://localhost:8085`, `REACT_APP_CHATBOT_URL=http://localhost:4002`

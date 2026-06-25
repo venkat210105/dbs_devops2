@@ -11,18 +11,18 @@ const RootFeedbackComponent = () => {
       {/* Professional Navigation Header */}
       <div className="professional-navbar">
         <div className="navbar-inner container">
-        <div className="dbs-brand">
-          <div className="dbs-logo-container">
-            {/* DBS Logo */}
-            <div className="dbs-logo-container-img">
+        <div className="app-brand">
+          <div className="app-logo-container">
+            {/* Universal Logo */}
+            <div className="app-logo-container-img">
               <img 
                 src={require('./image.png')} 
-                alt="DBS Bank Logo" 
-                className="dbs-logo-image" 
+                alt="Universal Feedback Logo" 
+                className="app-logo-image" 
               />
             </div>
             <div className="brand-text">
-              <span className="brand-name">DBS Bank</span>
+              <span className="brand-name">Universal Feedback System</span>
               <span className="brand-tagline">Live more, Bank less</span>
             </div>
           </div>

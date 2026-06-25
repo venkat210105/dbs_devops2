@@ -2,7 +2,7 @@
 # Bash Script to Import Data to Railway MySQL
 # Usage: ./import_to_railway.sh
 
-echo "=== DBS Feedback System - Railway Database Import ==="
+echo "=== Universal Feedback System - Railway Database Import ==="
 echo ""
 
 # Check if Railway CLI is installed

@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'healthy', 
-    service: 'DBS Chatbot Service',
+    service: 'Universal Chatbot Service',
     timestamp: new Date().toISOString(),
     version: '1.0.0'
   });
@@ -44,7 +44,7 @@ app.use("/api/chat", testRoutes);
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
-    message: 'DBS Chatbot Service',
+    message: 'Universal Chatbot Service',
     status: 'running',
     endpoints: {
       health: '/health',
@@ -82,7 +82,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
-  console.log('🤖 DBS Chatbot Service started');
+  console.log('🤖 Universal Chatbot Service started');
   console.log(`📡 Server running on port ${port}`);
   console.log(`🌐 Health check: http://localhost:${port}/health`);
   console.log(`💬 Chat endpoint: http://localhost:${port}/api/chat/message`);

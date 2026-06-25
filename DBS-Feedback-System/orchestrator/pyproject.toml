@@ -1,7 +1,7 @@
 [project]
 name = "feedback-orchestrator"
 version = "0.1.0"
-description = "Agentic orchestrator for DBS Feedback System"
+description = "Agentic orchestrator for Universal Feedback System"
 requires-python = ">=3.11"
 
 [project.dependencies]

@@ -1,4 +1,4 @@
-package com.dbs.feedback.util;
+package com.universal.feedback.util;
 
 import java.util.Arrays;
 import java.util.List;

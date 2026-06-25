@@ -1,4 +1,4 @@
-# Docker ignore file for DBS Feedback System
+# Docker ignore file for Universal Feedback System
 .git
 .gitignore
 README.md

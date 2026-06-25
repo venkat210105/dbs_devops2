@@ -73,7 +73,7 @@ function stopHeartbeats() {
 }
 
 function getSessionId() {
-  const key = 'dbs_session_id';
+  const key = 'universal_session_id';
   let id = localStorage.getItem(key);
   if (!id) {
     id = cryptoRandomId();

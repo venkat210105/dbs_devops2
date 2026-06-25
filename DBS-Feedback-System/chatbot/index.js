@@ -1,4 +1,4 @@
-// DBS Chatbot Test File
+// Universal Chatbot Test File
 // This file is for testing OpenAI connection
 // Use app.js as the main entry point
 
@@ -23,7 +23,7 @@ const testOpenAI = async () => {
     const response = await client.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful DBS Bank assistant.' },
+        { role: 'system', content: 'You are a helpful Universal Bank assistant.' },
         { role: 'user', content: 'Hello, test connection' }
       ],
       max_tokens: 50

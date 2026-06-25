@@ -11,7 +11,7 @@
     <relativePath/>
   </parent>
 
-  <groupId>com.dbs</groupId>
+  <groupId>com.universal</groupId>
   <artifactId>feedback-backend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>

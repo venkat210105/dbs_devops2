@@ -1,4 +1,4 @@
-# DBS Feedback System - Database Migration Session Documentation
+# Universal Feedback System - Database Migration Session Documentation
 
 **Date**: January 26, 2026  
 **Objective**: Migrate 80 local feedback records from Docker MySQL to Railway MySQL database  
@@ -21,7 +21,7 @@
 
 ### Starting Point
 - Docker was confirmed to be working
-- Local MySQL container (`dbs-feedback-mysql`) running with 80 feedback records
+- Local MySQL container (`feedback-mysql`) running with 80 feedback records
 - Railway MySQL database had only 2 test records
 - Goal: Replace Railway data with complete local dataset
 
@@ -37,7 +37,7 @@
 ### 1. Local Database Verification
 **Command Used**:
 ```powershell
-docker exec dbs-feedback-mysql mysql -udbsuser -pdbspass123 -D dbs_feedback -e "SELECT COUNT(*) as total_records FROM feedback;"
+docker exec feedback-mysql mysql -uuniversal_user -puniversal_pass123 -D universal_feedback -e "SELECT COUNT(*) as total_records FROM feedback;"
 ```
 
 **Result**: 
@@ -87,15 +87,15 @@ CREATE TABLE `feedback` (
 ### Issue #1: Initial Export Attempt Failed
 **Problem**:
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -udbsuser -pdbspass123 --no-create-info --skip-triggers --compact dbs_feedback feedback
+docker exec feedback-mysql mysqldump -uuniversal_user -puniversal_pass123 --no-create-info --skip-triggers --compact universal_feedback feedback
 ```
 **Error**: `Access denied; you need (at least one of) the PROCESS privilege(s)`
 
-**Root Cause**: User 'dbsuser' lacked necessary privileges for mysqldump
+**Root Cause**: User 'universal_user' lacked necessary privileges for mysqldump
 
 **Solution**:
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces dbs_feedback feedback > backup_feedback.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces universal_feedback feedback > backup_feedback.sql
 ```
 - ✅ Switched to 'root' user
 - ✅ Added `--no-tablespaces` flag to avoid privilege issues
@@ -166,7 +166,7 @@ Get-Content $backupFile | mysql -h $MYSQL_HOST -P $MYSQL_PORT -u $MYSQL_USER -p$
 **Solution**:
 ```powershell
 # Created new export with --complete-insert flag
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert dbs_feedback feedback > backup_feedback_complete.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert universal_feedback feedback > backup_feedback_complete.sql
 ```
 
 **Result**:
@@ -254,7 +254,7 @@ SET FOREIGN_KEY_CHECKS=1;
 **Purpose**: Final export with complete INSERT statements  
 **Created With**:
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert dbs_feedback feedback > backup_feedback_complete.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert universal_feedback feedback > backup_feedback_complete.sql
 ```
 **Features**:
 - ✅ Includes column names in INSERT statements
@@ -324,30 +324,30 @@ INSERT INTO `feedback` (`id`, `user_name`, `user_email`, `product_id`, `rating`,
 
 **Step 1.1**: Verify local data
 ```powershell
-docker exec dbs-feedback-mysql mysql -udbsuser -pdbspass123 -D dbs_feedback -e "SELECT COUNT(*) as total_records FROM feedback;"
+docker exec feedback-mysql mysql -uuniversal_user -puniversal_pass123 -D universal_feedback -e "SELECT COUNT(*) as total_records FROM feedback;"
 # Result: 80 records
 ```
 
 **Step 1.2**: Check table structure
 ```powershell
-docker exec dbs-feedback-mysql mysql -uroot -proot -D dbs_feedback -e "SHOW CREATE TABLE feedback\G"
+docker exec feedback-mysql mysql -uroot -proot -D universal_feedback -e "SHOW CREATE TABLE feedback\G"
 ```
 
 **Step 1.3**: First export attempt (failed)
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -udbsuser -pdbspass123 --no-create-info --skip-triggers --compact dbs_feedback feedback > backup_feedback.sql
+docker exec feedback-mysql mysqldump -uuniversal_user -puniversal_pass123 --no-create-info --skip-triggers --compact universal_feedback feedback > backup_feedback.sql
 # Error: Access denied - PROCESS privilege needed
 ```
 
 **Step 1.4**: Second export (partial success)
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces dbs_feedback feedback > backup_feedback.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces universal_feedback feedback > backup_feedback.sql
 # Success: File created but column order issues later discovered
 ```
 
 **Step 1.5**: Final export (complete success)
 ```powershell
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert dbs_feedback feedback > backup_feedback_complete.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert universal_feedback feedback > backup_feedback_complete.sql
 # Success: File created with column names specified
 ```
 
@@ -485,7 +485,7 @@ mysql -h metro.proxy.rlwy.net -P 52769 -u root -p railway -e "SELECT MIN(created
 | Metric | Value |
 |--------|-------|
 | **Total Records Migrated** | 80 |
-| **Source** | Docker MySQL (dbs-feedback-mysql) |
+| **Source** | Docker MySQL (feedback-mysql) |
 | **Destination** | Railway MySQL (metro.proxy.rlwy.net:52769) |
 | **Database** | railway |
 | **Date Range** | 2025-09-26 to 2025-11-04 |
@@ -674,10 +674,10 @@ if ($LASTEXITCODE -eq 0) {
 ### Export Commands
 ```powershell
 # Simple export (no column names)
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces dbs_feedback feedback > backup_feedback.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces universal_feedback feedback > backup_feedback.sql
 
 # Complete export (with column names) - RECOMMENDED
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert dbs_feedback feedback > backup_feedback_complete.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert universal_feedback feedback > backup_feedback_complete.sql
 ```
 
 ### Import Commands
@@ -860,9 +860,9 @@ COMMIT;  -- or ROLLBACK if issues found
 ### Local Docker Environment
 ```env
 MYSQL_ROOT_PASSWORD=root
-MYSQL_DATABASE=dbs_feedback
-MYSQL_USER=dbsuser
-MYSQL_PASSWORD=dbspass123
+MYSQL_DATABASE=universal_feedback
+MYSQL_USER=universal_user
+MYSQL_PASSWORD=universal_pass123
 MYSQL_PORT=3307
 ```
 
@@ -892,7 +892,7 @@ Create scheduled backups:
 ```powershell
 # Weekly backup script
 $date = Get-Date -Format "yyyyMMdd"
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --complete-insert dbs_feedback feedback > "backups/feedback_$date.sql"
+docker exec feedback-mysql mysqldump -uroot -proot --complete-insert universal_feedback feedback > "backups/feedback_$date.sql"
 ```
 
 ### 2. CI/CD Integration
@@ -955,7 +955,7 @@ Consider implementing:
 
 ```powershell
 # 1. Export from source
-docker exec dbs-feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert dbs_feedback feedback > backup_feedback_complete.sql
+docker exec feedback-mysql mysqldump -uroot -proot --no-create-info --skip-triggers --compact --no-tablespaces --complete-insert universal_feedback feedback > backup_feedback_complete.sql
 
 # 2. Delete target data (if replacing)
 mysql -h <RAILWAY_HOST> -P <RAILWAY_PORT> -u root -p railway -e "DELETE FROM feedback;"

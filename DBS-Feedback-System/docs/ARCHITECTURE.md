@@ -1,41 +1,41 @@
-# DBS Feedback System - Architecture
+# Universal Feedback System - Architecture
 
 This document provides a complete view of the system components, key responsibilities, APIs by service, and the end-to-end dataflows.
 
 ## Components Overview
 
 - Frontend (React + MUI)
-  - Container: `dbs-feedback-frontend`
+  - Container: `feedback-frontend`
   - Port: 3000 (host) → Nginx 80 (container)
   - Talks to Backend via `REACT_APP_API_URL` or `/api` proxy. In dev, defaults to `http://localhost:8085`.
 
 - Backend (Spring Boot 3.x, Java 21)
-  - Container: `dbs-feedback-backend`
+  - Container: `feedback-backend`
   - Port: 8085
   - Responsibilities: feedback CRUD, admin analytics, tasks, implicit CSV intake (forward to orchestrator), tracking events, health.
 
 - Orchestrator (FastAPI + LangGraph)
-  - Container: `dbs-orchestrator`
+  - Container: `orchestrator`
   - Port: 5050
   - Responsibilities: chat orchestration, implicit import processing, classification, calling backend & ML service.
 
 - ML Service (FastAPI + Transformers)
-  - Container: `dbs-feedback-ml-service`
+  - Container: `feedback-ml-service`
   - Port: 5000
   - Responsibilities: sentiment and topic analysis.
 
 - Chatbot API (Node/Express)
-  - Container: `dbs-chatbot-api`
+  - Container: `chatbot-api`
   - Port: 4002
   - Responsibilities: chat interface for web UI; proxies to Orchestrator or HF-like service.
 
 - HF-like Chat Service (Python)
-  - Container: `dbs-chatbot-hf`
+  - Container: `chatbot-hf`
   - Port: 5001
   - Responsibilities: mock/simplified LLM responses for chatbot.
 
 - Database (MySQL 8)
-  - Container: `dbs-feedback-mysql`
+  - Container: `feedback-mysql`
   - Port: 3307 (host) → 3306 (container)
   - Schema initialized via `database/init.sql`, additional JPA-managed tables.
   - Tables: `feedback`, `page_views`, `feedback_tasks`, and new `user_profiles` (feedback.user_profile_id FK)

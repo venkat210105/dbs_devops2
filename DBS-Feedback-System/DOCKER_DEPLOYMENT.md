@@ -1,4 +1,4 @@
-# DBS Feedback System - Docker Deployment
+# Universal Feedback System - Docker Deployment
 
 ## Quick Start
 
@@ -84,7 +84,7 @@ docker-compose pull
 docker-compose up -d
 
 # Backup database
-docker exec dbs-feedback-mysql mysqldump -u root -p dbs_feedback > backup.sql
+docker exec feedback-mysql mysqldump -u root -p universal_feedback > backup.sql
 ```
 
 ### Maintenance Commands
@@ -97,7 +97,7 @@ docker-compose down -v --remove-orphans
 
 # Reset database (WARNING: This deletes all data)
 docker-compose down -v
-docker volume rm dbs-feedback-system_mysql_data
+docker volume rm universal-feedback-system_mysql_data
 docker-compose up -d
 ```
 
@@ -105,10 +105,10 @@ docker-compose up -d
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `MYSQL_ROOT_PASSWORD` | Database root password | `dbs_root_secure_2024` |
-| `MYSQL_DATABASE` | Database name | `dbs_feedback` |
-| `MYSQL_USER` | Application database user | `dbsuser` |
-| `MYSQL_PASSWORD` | Application database password | `dbs_secure_pass_2024` |
+| `MYSQL_ROOT_PASSWORD` | Database root password | `universal_root_secure_2024` |
+| `MYSQL_DATABASE` | Database name | `universal_feedback` |
+| `MYSQL_USER` | Application database user | `universal_user` |
+| `MYSQL_PASSWORD` | Application database password | `universal_secure_pass_2024` |
 | `BACKEND_PORT` | Backend service port | `8085` |
 | `FRONTEND_PORT` | Frontend service port | `3000` |
 | `ML_SERVICE_PORT` | ML service port | `5000` |
@@ -151,7 +151,7 @@ curl http://localhost:5000/health
    docker-compose logs mysql
    
    # Connect to database directly
-   docker exec -it dbs-feedback-mysql mysql -u root -p
+   docker exec -it feedback-mysql mysql -u root -p
    ```
 
 3. **Memory Issues**
@@ -190,5 +190,5 @@ docker stats
 docker-compose logs --tail=100 -f
 
 # Container inspection
-docker inspect dbs-feedback-backend
+docker inspect feedback-backend
 ```

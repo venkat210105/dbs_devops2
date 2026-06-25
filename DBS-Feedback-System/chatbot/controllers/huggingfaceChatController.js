@@ -8,7 +8,7 @@ const conversationStore = new Map();
 const functions = [
   {
     name: "submit_feedback",
-    description: "Submit customer feedback to DBS Bank system",
+    description: "Submit customer feedback to Universal Bank system",
     parameters: {
       type: "object",
       properties: {
@@ -47,7 +47,7 @@ const functions = [
         },
         businessUnit: {
           type: "string",
-          description: "DBS business unit",
+          description: "Universal business unit",
           enum: ["Retail Banking", "Corporate Banking", "Investment Banking", "Digital Bank", "Other"]
         }
       },
@@ -65,7 +65,7 @@ async function callHuggingFaceService(messages, functions) {
     const response = await axios.post(url, {
       messages,
       functions,
-      model: 'dbs-banking-assistant'
+      model: 'universal-banking-assistant'
     }, {
       timeout: 10000,
       headers: {
@@ -84,7 +84,7 @@ async function callHuggingFaceService(messages, functions) {
       choices: [{
         message: {
           role: 'assistant',
-          content: "I'm your DBS Bank assistant. I'm currently having technical difficulties connecting to our AI service, but I'm here to help you submit feedback. Could you tell me about your banking experience?"
+          content: "I'm your Universal Bank assistant. I'm currently having technical difficulties connecting to our AI service, but I'm here to help you submit feedback. Could you tell me about your banking experience?"
         }
       }]
     };
@@ -108,23 +108,23 @@ export async function handleMessage(req, res) {
   if (lower === 'reset' || lower === 'restart' || lower === 'start over') {
     conversationStore.delete(sessionId);
     return res.json({
-      reply: "Chat reset. Hello! I'm your DBS Bank assistant. How can I help you submit feedback about your banking experience today?",
+      reply: "Chat reset. Hello! I'm your Universal Bank assistant. How can I help you submit feedback about your banking experience today?",
       reset: true
     });
   }
 
-  // Enhanced system prompt for DBS assistant (only added once per session)
+  // Enhanced system prompt for Universal assistant (only added once per session)
   const system = {
     role: "system",
-    content: `You are a professional DBS Bank customer service assistant. Your role is to:
+    content: `You are a professional Universal Bank customer service assistant. Your role is to:
     
-    1. Help customers submit feedback about DBS banking services
+    1. Help customers submit feedback about Universal banking services
     2. Ask clarifying questions to gather complete feedback information
     3. Be professional, helpful, and empathetic
     4. Guide customers through the feedback process step by step
     5. Ensure you collect: customer name, email, rating (1-5), detailed feedback, service category, and service channel
     
-    Always maintain DBS Bank's professional standards and be courteous in all interactions.
+    Always maintain Universal Bank's professional standards and be courteous in all interactions.
     When you have sufficient information, use the submit_feedback function to process their feedback.`
   };
 
@@ -193,7 +193,7 @@ export async function handleMessage(req, res) {
           conversationStore.delete(sessionId);
           
           return res.json({ 
-            reply: `Thank you ${args.customerName}! Your feedback has been successfully submitted to DBS Bank. Your feedback ID is #${mockBackendResponse.id}. We appreciate your ${args.rating}-star rating and will review your comments about ${args.serviceCategory} to improve our services.`,
+            reply: `Thank you ${args.customerName}! Your feedback has been successfully submitted to Universal Bank. Your feedback ID is #${mockBackendResponse.id}. We appreciate your ${args.rating}-star rating and will review your comments about ${args.serviceCategory} to improve our services.`,
             success: true,
             feedbackId: mockBackendResponse.id,
             huggingFaceMode: true
@@ -202,7 +202,7 @@ export async function handleMessage(req, res) {
         } catch (error) {
           console.error("Function processing error:", error.message);
           return res.json({ 
-            reply: "I apologize, but there was an issue processing your feedback. Please try again or contact DBS customer service directly.",
+            reply: "I apologize, but there was an issue processing your feedback. Please try again or contact Universal customer service directly.",
             error: true
           });
         }
@@ -210,7 +210,7 @@ export async function handleMessage(req, res) {
       
     } else {
       // Regular conversation response
-      const reply = choice?.message?.content || "I'm here to help you submit feedback to DBS Bank. How can I assist you today?";
+      const reply = choice?.message?.content || "I'm here to help you submit feedback to Universal Bank. How can I assist you today?";
       console.log(`💬 [${sessionId}] Regular response: ${reply}`);
       // Persist assistant reply in conversation history to maintain context across turns
       history.push({ role: 'assistant', content: reply });
@@ -227,7 +227,7 @@ export async function handleMessage(req, res) {
     console.error(`Chatbot error [${sessionId}]:`, err.message);
     
     return res.status(500).json({ 
-      error: "I'm experiencing technical difficulties. Please try again or contact DBS customer service.",
+      error: "I'm experiencing technical difficulties. Please try again or contact Universal customer service.",
       details: err.message
     });
   }

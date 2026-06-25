@@ -9,7 +9,7 @@ router.get("/health", (req, res) => {
   const aiService = process.env.AI_SERVICE || 'huggingface';
   res.json({
     status: "healthy",
-    service: "DBS Chat API",
+    service: "Universal Chat API",
     aiService,
     timestamp: new Date().toISOString()
   });

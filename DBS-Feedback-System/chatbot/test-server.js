@@ -8,7 +8,7 @@ app.use(express.json());
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'healthy', 
-    service: 'DBS Chatbot - Minimal Test',
+    service: 'Universal Chatbot - Minimal Test',
     timestamp: new Date().toISOString()
   });
 });
